@@ -1,6 +1,6 @@
-# phar-io/version
+# Version
 
-...
+Library for handling version information and constraints
 
 ## Installation
 

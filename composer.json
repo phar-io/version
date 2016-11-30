@@ -1,6 +1,6 @@
 {
-  "name": "phar-io/manifest",
-  "description": "Component for reading phar.io manifest information from a PHP Archive (PHAR)",
+  "name": "phar-io/version",
+  "description": "Library for handling version information and constraints",
   "license": "BSD-3-Clause",
   "authors": [
     {
@@ -20,12 +20,10 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/phar-io/manifest/issues"
+    "issues": "https://github.com/phar-io/version/issues"
   },
   "require": {
-    "php": "^5.6 || ^7.0",
-    "ext-dom": "*",
-    "ext-phar": "*"
+    "php": "^5.6 || ^7.0"
   },
   "autoload": {
     "classmap": [
