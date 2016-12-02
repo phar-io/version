@@ -39,12 +39,15 @@ class VersionConstraintParserTest extends \PHPUnit_Framework_TestCase {
         $parser->parse($versionString);
     }
 
+    /**
+     * @return array
+     */
     public function versionStringProvider() {
         return [
             ['1.0.2', new ExactVersionConstraint('1.0.2')],
             [
                 '~4.6',
-                new VersionConstraintGroup(
+                new AndVersionConstraintGroup(
                     '~4.6',
                     [
                         new GreaterThanOrEqualToVersionConstraint('~4.6', new Version('4.6')),
@@ -54,7 +57,7 @@ class VersionConstraintParserTest extends \PHPUnit_Framework_TestCase {
             ],
             [
                 '~4.6.2',
-                new VersionConstraintGroup(
+                new AndVersionConstraintGroup(
                     '~4.6.2',
                     [
                         new GreaterThanOrEqualToVersionConstraint('~4.6.2', new Version('4.6.2')),
@@ -64,7 +67,7 @@ class VersionConstraintParserTest extends \PHPUnit_Framework_TestCase {
             ],
             [
                 '^2.6.1',
-                new VersionConstraintGroup(
+                new AndVersionConstraintGroup(
                     '^2.6.1',
                     [
                         new GreaterThanOrEqualToVersionConstraint('^2.6.1', new Version('2.6.1')),
@@ -74,7 +77,37 @@ class VersionConstraintParserTest extends \PHPUnit_Framework_TestCase {
             ],
             ['5.1.*', new SpecificMajorAndMinorVersionConstraint('5.1.*', 5, 1)],
             ['5.*', new SpecificMajorVersionConstraint('5.*', 5)],
-            ['*', new AnyVersionConstraint()]
+            ['*', new AnyVersionConstraint()],
+            [
+                '1.0.2 || 1.0.5', 
+                new OrVersionConstraintGroup(
+                    '1.0.2 || 1.0.5', 
+                    [
+                        new ExactVersionConstraint('1.0.2'), 
+                        new ExactVersionConstraint('1.0.5')
+                    ]
+                )
+            ],
+            [
+                '^5.6 || ^7.0', 
+                new OrVersionConstraintGroup(
+                    '^5.6 || ^7.0',
+                    [
+                        new AndVersionConstraintGroup(
+                            '^5.6', [
+                                new GreaterThanOrEqualToVersionConstraint('^5.6', new Version('5.6')),
+                                new SpecificMajorVersionConstraint('^5.6', 5)        
+                            ]
+                        ),
+                        new AndVersionConstraintGroup(
+                            '^7.0', [
+                                new GreaterThanOrEqualToVersionConstraint('^7.0', new Version('7.0')),
+                                new SpecificMajorVersionConstraint('^7.0', 7)
+                            ]
+                        )                        
+                    ]
+                )
+            ]
         ];
     }
 
@@ -82,8 +115,9 @@ class VersionConstraintParserTest extends \PHPUnit_Framework_TestCase {
         return [
             ['foo'],
             ['+1.0.2'],
-            ['1.0.2 || 1.0.5'],
             ['>=2.0'],
+            ['^5.6 || >= 7.0'],
+            ['2.0 || foo']
         ];
     }
 }

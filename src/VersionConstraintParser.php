@@ -19,7 +19,11 @@ class VersionConstraintParser {
      * @throws UnsupportedVersionConstraintException
      */
     public function parse($value) {
-
+        
+        if (strpos($value, '||') !== false) {
+            return $this->handleOrGroup($value);
+        }
+        
         if (!preg_match('/^[\^~\*]?[\d.\*]+$/', $value)) {
             throw new UnsupportedVersionConstraintException(
                 sprintf('Version constraint %s is not supported.', $value)
@@ -56,9 +60,23 @@ class VersionConstraintParser {
     }
 
     /**
+     * @param $value
+     * @return OrVersionConstraintGroup
+     */
+    private function handleOrGroup($value) {
+        $constraints = [];
+        
+        foreach (explode('||', $value) as $groupSegment) {
+            $constraints[] = $this->parse(trim($groupSegment));
+        }
+        
+        return new OrVersionConstraintGroup($value, $constraints);
+    }
+    
+    /**
      * @param string $value
      *
-     * @return VersionConstraintGroup
+     * @return AndVersionConstraintGroup
      */
     private function handleTildeOperator($value) {
         $version     = new Version(substr($value, 1));
@@ -78,18 +96,18 @@ class VersionConstraintParser {
             );
         }
 
-        return new VersionConstraintGroup($value, $constraints);
+        return new AndVersionConstraintGroup($value, $constraints);
     }
 
     /**
      * @param string $value
      *
-     * @return VersionConstraintGroup
+     * @return AndVersionConstraintGroup
      */
     private function handleCaretOperator($value) {
         $version = new Version(substr($value, 1));
 
-        return new VersionConstraintGroup(
+        return new AndVersionConstraintGroup(
             $value,
             [
                 new GreaterThanOrEqualToVersionConstraint($value, $version),
