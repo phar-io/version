@@ -27,9 +27,9 @@ class Version {
     private $patch;
 
     /**
-     * @var string
+     * @var PreReleaseSuffix
      */
-    private $label = '';
+    private $preReleaseSuffix;
 
     /**
      * @var string
@@ -42,39 +42,28 @@ class Version {
     public function __construct($versionString) {
         $this->ensureVersionStringIsValid($versionString);
         $this->versionString = $versionString;
-        $this->parseVersion($versionString);
     }
 
     /**
-     * @param $versionString
+     * @param array $matches
      */
-    private function parseVersion($versionString) {
-        $this->extractLabel($versionString);
-        $versionSegments = explode('.', $versionString);
-        $this->major     = new VersionNumber($versionSegments[0]);
+    private function parseVersion(array $matches) {
+        $this->major = new VersionNumber($matches['Major']);
+        $this->minor = new VersionNumber($matches['Minor']);
+        $this->patch = isset($matches['Patch']) ? new VersionNumber($matches['Patch']) : new VersionNumber(null);
+        if (isset($matches['ReleaseType'])) {
+            $preReleaseNumber = isset($matches['ReleaseTypeCount']) ? (int)$matches['ReleaseTypeCount'] : null;
 
-        $minorValue = isset($versionSegments[1]) ? $versionSegments[1] : null;
-        $patchValue = isset($versionSegments[2]) ? $versionSegments[2] : null;
-
-        $this->minor = new VersionNumber($minorValue);
-        $this->patch = new VersionNumber($patchValue);
-    }
-
-    /**
-     * @param string $versionString
-     */
-    private function extractLabel(&$versionString) {
-        if (preg_match('/\-(.*)/', $versionString, $matches) == 1) {
-            $this->label   = $matches[1];
-            $versionString = str_replace($matches[0], '', $versionString);
+            $this->preReleaseSuffix = new PreReleaseSuffix($matches['ReleaseType'], $preReleaseNumber);
         }
     }
 
     /**
-     * @return string
+     * @return PreReleaseSuffix
      */
-    public function getLabel() {
-        return $this->label;
+    public function getPreReleaseSuffix()
+    {
+        return $this->preReleaseSuffix;
     }
 
     /**
@@ -159,5 +148,7 @@ class Version {
                 sprintf("Version string '%s' does not follow SemVer semantics", $version)
             );
         }
+
+        $this->parseVersion($matches);
     }
 }

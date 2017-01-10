@@ -21,15 +21,22 @@ class VersionTest extends \PHPUnit_Framework_TestCase {
      * @param string $expectedMajor
      * @param string $expectedMinor
      * @param string $expectedPatch
-     * @param string $expectedLabel
+     * @param string $expectedPreReleaseValue
+     * @param int $expectedReleaseCount
      */
-    public function testParsesVersionNumbers($versionString, $expectedMajor, $expectedMinor, $expectedPatch, $expectedLabel = '') {
+    public function testParsesVersionNumbers($versionString, $expectedMajor, $expectedMinor, $expectedPatch, $expectedPreReleaseValue = '', $expectedReleaseCount = 0) {
         $version = new Version($versionString);
 
         $this->assertSame($expectedMajor, $version->getMajor()->getValue());
         $this->assertSame($expectedMinor, $version->getMinor()->getValue());
         $this->assertSame($expectedPatch, $version->getPatch()->getValue());
-        $this->assertSame($expectedLabel, $version->getLabel());
+        if ($expectedPreReleaseValue !== '') {
+            $this->assertSame($expectedPreReleaseValue, $version->getPreReleaseSuffix()->getValue());
+        }
+        if ($expectedReleaseCount !== 0) {
+            $this->assertSame($expectedReleaseCount, $version->getPreReleaseSuffix()->getNumber());
+        }
+
         $this->assertSame($versionString, $version->getVersionString());
     }
 
@@ -38,7 +45,7 @@ class VersionTest extends \PHPUnit_Framework_TestCase {
             ['0.0.1', '0', '0', '1'],
             ['0.1.2', '0', '1', '2'],
             ['1.0.0-alpha', '1', '0', '0', 'alpha'],
-            ['3.4.12-dev3', '3', '4', '12', 'dev3'],
+            ['3.4.12-dev3', '3', '4', '12', 'dev', 3],
         ];
     }
 
