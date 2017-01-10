@@ -22,16 +22,14 @@ class VersionTest extends \PHPUnit_Framework_TestCase {
      * @param string $expectedMinor
      * @param string $expectedPatch
      * @param string $expectedLabel
-     * @param string $expectedMetadata
      */
-    public function testParsesVersionNumbers($versionString, $expectedMajor, $expectedMinor, $expectedPatch, $expectedLabel = '', $expectedMetadata = '') {
+    public function testParsesVersionNumbers($versionString, $expectedMajor, $expectedMinor, $expectedPatch, $expectedLabel = '') {
         $version = new Version($versionString);
 
         $this->assertSame($expectedMajor, $version->getMajor()->getValue());
         $this->assertSame($expectedMinor, $version->getMinor()->getValue());
         $this->assertSame($expectedPatch, $version->getPatch()->getValue());
         $this->assertSame($expectedLabel, $version->getLabel());
-        $this->assertSame($expectedMetadata, $version->getBuildMetaData());
         $this->assertSame($versionString, $version->getVersionString());
     }
 

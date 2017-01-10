@@ -34,11 +34,6 @@ class Version {
     /**
      * @var string
      */
-    private $buildMetaData = '';
-
-    /**
-     * @var string
-     */
     private $versionString = '';
 
     /**
@@ -54,7 +49,6 @@ class Version {
      * @param $versionString
      */
     private function parseVersion($versionString) {
-        $this->extractBuildMetaData($versionString);
         $this->extractLabel($versionString);
         $versionSegments = explode('.', $versionString);
         $this->major     = new VersionNumber($versionSegments[0]);
@@ -64,16 +58,6 @@ class Version {
 
         $this->minor = new VersionNumber($minorValue);
         $this->patch = new VersionNumber($patchValue);
-    }
-
-    /**
-     * @param string $versionString
-     */
-    private function extractBuildMetaData(&$versionString) {
-        if (preg_match('/\+(.*)/', $versionString, $matches) == 1) {
-            $this->buildMetaData = $matches[1];
-            $versionString       = str_replace($matches[0], '', $versionString);
-        }
     }
 
     /**
@@ -91,13 +75,6 @@ class Version {
      */
     public function getLabel() {
         return $this->label;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBuildMetaData() {
-        return $this->buildMetaData;
     }
 
     /**
