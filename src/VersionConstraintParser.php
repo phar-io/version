@@ -37,7 +37,7 @@ class VersionConstraintParser {
                 return $this->handleCaretOperator($value);
         }
 
-        $version = new Version($value);
+        $version = new VersionConstraintValue($value);
 
         if ($version->getMajor()->isAny()) {
             return new AnyVersionConstraint();

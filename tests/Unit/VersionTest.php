@@ -11,7 +11,7 @@
 namespace PharIo\Version;
 
 /**
- * @covers PharIo\Version\Version
+ * @covers \PharIo\Version\Version
  */
 class VersionTest extends \PHPUnit_Framework_TestCase {
     /**
@@ -40,8 +40,7 @@ class VersionTest extends \PHPUnit_Framework_TestCase {
             ['0.0.1', '0', '0', '1'],
             ['0.1.2', '0', '1', '2'],
             ['1.0.0-alpha', '1', '0', '0', 'alpha'],
-            ['0.0.1-dev+ABC', '0', '0', '1', 'dev', 'ABC'],
-            ['1.0.0-x.7.z.92', '1', '0', '0', 'x.7.z.92']
+            ['3.4.12-dev3', '3', '4', '12', 'dev3'],
         ];
     }
 
@@ -56,6 +55,9 @@ class VersionTest extends \PHPUnit_Framework_TestCase {
         $this->assertSame($expectedResult, $versionA->isGreaterThan($versionB));
     }
 
+    /**
+     * @return array
+     */
     public function versionGreaterThanProvider() {
         return [
             [new Version('1.0.0'), new Version('1.0.1'), false],
@@ -66,6 +68,29 @@ class VersionTest extends \PHPUnit_Framework_TestCase {
             [new Version('2.5.8'), new Version('1.6.8'), true],
             [new Version('2.5.8'), new Version('2.6.8'), false],
             [new Version('2.5.8'), new Version('3.1.2'), false],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidVersionStringProvider
+     *
+     * @param string $versionString
+     */
+    public function testThrowsExceptionIfVersionStringDoesNotFollowSemVer($versionString)
+    {
+        $this->expectException(InvalidVersionException::class);
+        new Version($versionString);
+    }
+
+    /**
+     * @return array
+     */
+    public function invalidVersionStringProvider()
+    {
+        return [
+            ['foo'],
+            ['0.0.1-dev+ABC', '0', '0', '1', 'dev', 'ABC'],
+            ['1.0.0-x.7.z.92', '1', '0', '0', 'x.7.z.92']
         ];
     }
 

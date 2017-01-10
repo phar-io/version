@@ -11,7 +11,7 @@
 namespace PharIo\Version;
 
 /**
- * @covers PharIo\Version\VersionConstraintParser
+ * @covers \PharIo\Version\VersionConstraintParser
  */
 class VersionConstraintParserTest extends \PHPUnit_Framework_TestCase {
     /**
