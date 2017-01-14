@@ -19,11 +19,11 @@ class VersionConstraintParser {
      * @throws UnsupportedVersionConstraintException
      */
     public function parse($value) {
-        
+
         if (strpos($value, '||') !== false) {
             return $this->handleOrGroup($value);
         }
-        
+
         if (!preg_match('/^[\^~\*]?[\d.\*]+$/', $value)) {
             throw new UnsupportedVersionConstraintException(
                 sprintf('Version constraint %s is not supported.', $value)
@@ -42,12 +42,14 @@ class VersionConstraintParser {
         if ($version->getMajor()->isAny()) {
             return new AnyVersionConstraint();
         }
+
         if ($version->getMinor()->isAny()) {
             return new SpecificMajorVersionConstraint(
                 $value,
                 $version->getMajor()->getValue()
             );
         }
+
         if ($version->getPatch()->isAny()) {
             return new SpecificMajorAndMinorVersionConstraint(
                 $value,
@@ -61,18 +63,19 @@ class VersionConstraintParser {
 
     /**
      * @param $value
+     *
      * @return OrVersionConstraintGroup
      */
     private function handleOrGroup($value) {
         $constraints = [];
-        
+
         foreach (explode('||', $value) as $groupSegment) {
             $constraints[] = $this->parse(trim($groupSegment));
         }
-        
+
         return new OrVersionConstraintGroup($value, $constraints);
     }
-    
+
     /**
      * @param string $value
      *
@@ -83,6 +86,7 @@ class VersionConstraintParser {
         $constraints = [
             new GreaterThanOrEqualToVersionConstraint($value, $version)
         ];
+
         if ($version->getPatch()->isAny()) {
             $constraints[] = new SpecificMajorVersionConstraint(
                 $value,
@@ -115,5 +119,4 @@ class VersionConstraintParser {
             ]
         );
     }
-
 }

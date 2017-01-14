@@ -29,5 +29,4 @@ abstract class AbstractVersionConstraint implements VersionConstraint {
     public function asString() {
         return $this->originalValue;
     }
-
 }

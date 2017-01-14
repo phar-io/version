@@ -22,6 +22,7 @@ class GreaterThanOrEqualToVersionConstraint extends AbstractVersionConstraint {
      */
     public function __construct($originalValue, Version $minimalVersion) {
         parent::__construct($originalValue);
+
         $this->minimalVersion = $minimalVersion;
     }
 
@@ -34,5 +35,4 @@ class GreaterThanOrEqualToVersionConstraint extends AbstractVersionConstraint {
         return $version->getVersionString() == $this->minimalVersion->getVersionString() ||
         $version->isGreaterThan($this->minimalVersion);
     }
-
 }

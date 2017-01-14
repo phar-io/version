@@ -22,6 +22,7 @@ class AndVersionConstraintGroup extends AbstractVersionConstraint {
      */
     public function __construct($originalValue, array $constraints) {
         parent::__construct($originalValue);
+
         $this->constraints = $constraints;
     }
 
@@ -39,5 +40,4 @@ class AndVersionConstraintGroup extends AbstractVersionConstraint {
 
         return true;
     }
-
 }

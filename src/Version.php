@@ -41,6 +41,7 @@ class Version {
      */
     public function __construct($versionString) {
         $this->ensureVersionStringIsValid($versionString);
+
         $this->versionString = $versionString;
     }
 
@@ -51,8 +52,9 @@ class Version {
         $this->major = new VersionNumber($matches['Major']);
         $this->minor = new VersionNumber($matches['Minor']);
         $this->patch = isset($matches['Patch']) ? new VersionNumber($matches['Patch']) : new VersionNumber(null);
+
         if (isset($matches['ReleaseType'])) {
-            $preReleaseNumber = isset($matches['ReleaseTypeCount']) ? (int)$matches['ReleaseTypeCount'] : null;
+            $preReleaseNumber = isset($matches['ReleaseTypeCount']) ? (int) $matches['ReleaseTypeCount'] : null;
 
             $this->preReleaseSuffix = new PreReleaseSuffix($matches['ReleaseType'], $preReleaseNumber);
         }
@@ -82,18 +84,23 @@ class Version {
         if ($version->getMajor()->getValue() > $this->getMajor()->getValue()) {
             return false;
         }
+
         if ($version->getMajor()->getValue() < $this->getMajor()->getValue()) {
             return true;
         }
+
         if ($version->getMinor()->getValue() > $this->getMinor()->getValue()) {
             return false;
         }
+
         if ($version->getMinor()->getValue() < $this->getMinor()->getValue()) {
             return true;
         }
+
         if ($version->getPatch()->getValue() >= $this->getPatch()->getValue()) {
             return false;
         }
+
         if ($version->getPatch()->getValue() < $this->getPatch()->getValue()) {
             return true;
         }
@@ -143,6 +150,7 @@ class Version {
                 )?
             )?       
         $/x';
+
         if (preg_match($regex, $version, $matches) !== 1) {
             throw new InvalidVersionException(
                 sprintf("Version string '%s' does not follow SemVer semantics", $version)

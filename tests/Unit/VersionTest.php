@@ -22,7 +22,7 @@ class VersionTest extends \PHPUnit_Framework_TestCase {
      * @param string $expectedMinor
      * @param string $expectedPatch
      * @param string $expectedPreReleaseValue
-     * @param int $expectedReleaseCount
+     * @param int    $expectedReleaseCount
      */
     public function testParsesVersionNumbers($versionString, $expectedMajor, $expectedMinor, $expectedPatch, $expectedPreReleaseValue = '', $expectedReleaseCount = 0) {
         $version = new Version($versionString);

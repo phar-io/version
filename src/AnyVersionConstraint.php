@@ -26,5 +26,4 @@ class AnyVersionConstraint implements VersionConstraint {
     public function asString() {
         return '*';
     }
-
 }

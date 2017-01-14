@@ -38,7 +38,7 @@ class OrVersionConstraintGroupTest extends \PHPUnit_Framework_TestCase {
         $firstConstraint->expects($this->once())
             ->method('complies')
             ->will($this->returnValue(true));
-        
+
         $group = new OrVersionConstraintGroup('foo', [$firstConstraint, $secondConstraint]);
 
         $this->assertTrue($group->complies(new Version('1.0.0')));
@@ -59,5 +59,5 @@ class OrVersionConstraintGroupTest extends \PHPUnit_Framework_TestCase {
         $group = new OrVersionConstraintGroup('foo', [$firstConstraint, $secondConstraint]);
 
         $this->assertFalse($group->complies(new Version('1.0.0')));
-    }    
+    }
 }

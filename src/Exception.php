@@ -10,6 +10,5 @@
 
 namespace PharIo\Version;
 
-interface Exception
-{
+interface Exception {
 }

@@ -38,6 +38,7 @@ class VersionConstraintValue
      */
     public function __construct($versionString) {
         $this->versionString = $versionString;
+
         $this->parseVersion($versionString);
     }
 
@@ -47,6 +48,7 @@ class VersionConstraintValue
     private function parseVersion($versionString) {
         $this->extractBuildMetaData($versionString);
         $this->extractLabel($versionString);
+
         $versionSegments = explode('.', $versionString);
         $this->major     = new VersionNumber($versionSegments[0]);
 

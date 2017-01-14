@@ -79,24 +79,24 @@ class VersionConstraintParserTest extends \PHPUnit_Framework_TestCase {
             ['5.*', new SpecificMajorVersionConstraint('5.*', 5)],
             ['*', new AnyVersionConstraint()],
             [
-                '1.0.2 || 1.0.5', 
+                '1.0.2 || 1.0.5',
                 new OrVersionConstraintGroup(
-                    '1.0.2 || 1.0.5', 
+                    '1.0.2 || 1.0.5',
                     [
-                        new ExactVersionConstraint('1.0.2'), 
+                        new ExactVersionConstraint('1.0.2'),
                         new ExactVersionConstraint('1.0.5')
                     ]
                 )
             ],
             [
-                '^5.6 || ^7.0', 
+                '^5.6 || ^7.0',
                 new OrVersionConstraintGroup(
                     '^5.6 || ^7.0',
                     [
                         new AndVersionConstraintGroup(
                             '^5.6', [
                                 new GreaterThanOrEqualToVersionConstraint('^5.6', new Version('5.6')),
-                                new SpecificMajorVersionConstraint('^5.6', 5)        
+                                new SpecificMajorVersionConstraint('^5.6', 5)
                             ]
                         ),
                         new AndVersionConstraintGroup(
@@ -104,7 +104,7 @@ class VersionConstraintParserTest extends \PHPUnit_Framework_TestCase {
                                 new GreaterThanOrEqualToVersionConstraint('^7.0', new Version('7.0')),
                                 new SpecificMajorVersionConstraint('^7.0', 7)
                             ]
-                        )                        
+                        )
                     ]
                 )
             ]

@@ -10,6 +10,5 @@
 
 namespace PharIo\Version;
 
-final class UnsupportedVersionConstraintException extends \RuntimeException implements Exception
-{
+final class UnsupportedVersionConstraintException extends \RuntimeException implements Exception {
 }

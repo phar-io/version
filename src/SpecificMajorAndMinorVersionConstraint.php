@@ -28,6 +28,7 @@ class SpecificMajorAndMinorVersionConstraint extends AbstractVersionConstraint {
      */
     public function __construct($originalValue, $major, $minor) {
         parent::__construct($originalValue);
+
         $this->major = $major;
         $this->minor = $minor;
     }
@@ -44,5 +45,4 @@ class SpecificMajorAndMinorVersionConstraint extends AbstractVersionConstraint {
 
         return $version->getMinor()->getValue() == $this->minor;
     }
-
 }

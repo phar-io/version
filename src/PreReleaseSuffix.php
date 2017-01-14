@@ -3,20 +3,29 @@ namespace PharIo\Version;
 
 class PreReleaseSuffix
 {
+    /**
+     * @var string
+     */
     private $value;
 
+    /**
+     * @var int
+     */
     private $number;
 
     /**
-     * @param string $value
+     * @param string   $value
      * @param int|null $number
      */
     public function __construct($value, $number = null)
     {
-        $this->value = $value;
+        $this->value  = $value;
         $this->number = $number;
     }
 
+    /**
+     * @return string
+     */
     public function getValue()
     {
         return $this->value;
@@ -29,5 +38,4 @@ class PreReleaseSuffix
     {
         return $this->number;
     }
-
 }
