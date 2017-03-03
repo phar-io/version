@@ -22,7 +22,7 @@
         <exec executable="phive" taskname="phive">
             <arg value="install"/>
             <arg value="--trust-gpg-keys" />
-            <arg value="0x4AA394086372C20A,0xEA2EBCDC" />
+            <arg value="4AA394086372C20A,2A8299CE842DD38C" />
         </exec>
     </target>
 
