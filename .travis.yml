@@ -4,17 +4,27 @@ os:
 language: php
 
 before_install:
-  - composer self-update
+  - wget https://phar.io/releases/phive.phar
+  - wget https://phar.io/releases/phive.phar.asc
+  - gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 0x9B2D5D79
+  - gpg --verify phive.phar.asc phive.phar
+  - chmod +x phive.phar
+  - sudo mv phive.phar /usr/bin/phive
 
 install:
-  - travis_retry composer install --no-interaction --prefer-source
+  - ant setup
 
-script: ./vendor/bin/phpunit
+script: ./tools/phpunit
 
 php:
   - 5.6
   - 7.0
   - 7.1
+  - nightly
+
+matrix:
+  allow_failures:
+    - php: nightly
 
 notifications:
   email: false
