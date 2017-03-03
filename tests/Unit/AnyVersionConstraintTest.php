@@ -10,10 +10,12 @@
 
 namespace PharIo\Version;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @covers PharIo\Version\AnyVersionConstraint
  */
-class AnyVersionConstraintTest extends \PHPUnit_Framework_TestCase {
+class AnyVersionConstraintTest extends TestCase {
     public function versionProvider() {
         return [
             [new Version('1.0.2')],

@@ -10,10 +10,12 @@
 
 namespace PharIo\Version;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @covers \PharIo\Version\VersionConstraintParser
  */
-class VersionConstraintParserTest extends \PHPUnit_Framework_TestCase {
+class VersionConstraintParserTest extends TestCase {
     /**
      * @dataProvider versionStringProvider
      *

@@ -10,10 +10,12 @@
 
 namespace PharIo\Version;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @covers \PharIo\Version\Version
  */
-class VersionTest extends \PHPUnit_Framework_TestCase {
+class VersionTest extends TestCase {
     /**
      * @dataProvider versionProvider
      *

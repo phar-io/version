@@ -10,10 +10,12 @@
 
 namespace PharIo\Version;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @covers \PharIo\Version\AbstractVersionConstraint
  */
-class AbstractVersionConstraintTest extends \PHPUnit_Framework_TestCase {
+class AbstractVersionConstraintTest extends TestCase {
     public function testAsString() {
         /** @var AbstractVersionConstraint|\PHPUnit_Framework_MockObject_MockObject $constraint */
         $constraint = $this->getMockForAbstractClass(AbstractVersionConstraint::class, ['foo']);

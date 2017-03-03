@@ -10,10 +10,12 @@
 
 namespace PharIo\Version;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @covers PharIo\Version\ExactVersionConstraint
  */
-class ExactVersionConstraintTest extends \PHPUnit_Framework_TestCase {
+class ExactVersionConstraintTest extends TestCase {
     public function compliantVersionProvider() {
         return [
             ['1.0.2', new Version('1.0.2')],

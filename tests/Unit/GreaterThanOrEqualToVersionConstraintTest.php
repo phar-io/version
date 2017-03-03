@@ -10,10 +10,12 @@
 
 namespace PharIo\Version;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @covers PharIo\Version\GreaterThanOrEqualToVersionConstraint
  */
-class GreaterThanOrEqualToVersionConstraintTest extends \PHPUnit_Framework_TestCase {
+class GreaterThanOrEqualToVersionConstraintTest extends TestCase {
     public function versionProvider() {
         return [
             // compliant versions
