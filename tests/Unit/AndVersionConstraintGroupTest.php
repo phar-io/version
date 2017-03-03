@@ -13,7 +13,7 @@ namespace PharIo\Version;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers PharIo\Version\VersionConstraintGroup
+ * @covers PharIo\Version\AndVersionConstraintGroup
  */
 class AndVersionConstraintGroupTest extends TestCase {
     public function testReturnsFalseIfOneConstraintReturnsFalse() {
