@@ -1,5 +1,5 @@
 <?php
 namespace PharIo\Version;
 
-class InvalidVersionException extends \Exception implements Exception {
+class InvalidVersionException extends \InvalidArgumentException implements Exception {
 }
