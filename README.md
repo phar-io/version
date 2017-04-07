@@ -42,7 +42,7 @@ $caret_constraint->complies( new Version( '7.0.17' ) ); // true
 $caret_constraint->complies( new Version( '7.1.0' ) ); // true
 $caret_constraint->complies( new Version( '6.4.34' ) ); // false
 
-$tilde_constrant = $parser->parse( '~1.1.0' );
+$tilde_constraint = $parser->parse( '~1.1.0' );
 
 $tilde_constraint->complies( new Version( '1.1.4' ) ); // true
 $tilde_constraint->complies( new Version( '1.2.0' ) ); // false
