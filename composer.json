@@ -29,6 +29,13 @@
     "classmap": [
       "src/"
     ]
+  },
+  "require-dev": {
+    "theseer/autoload": "^1.23"
+  },
+  "scripts" : {
+    "post-autoload-dump": [
+      "@php vendor/bin/phpab src/ > src/autoload.php"
+    ]
   }
 }
-
