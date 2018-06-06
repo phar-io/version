@@ -53,13 +53,8 @@ class Version {
         $this->minor = new VersionNumber($matches['Minor']);
         $this->patch = isset($matches['Patch']) ? new VersionNumber($matches['Patch']) : new VersionNumber(null);
 
-        if (isset($matches['ReleaseType'])) {
-            $suffix = $matches['ReleaseType'];
-            if (isset($matches['ReleaseTypeCount'])) {
-                $suffix .= $matches['ReleaseTypeCount'];
-            }
-
-            $this->preReleaseSuffix = new PreReleaseSuffix($suffix);
+        if (isset($matches['PreReleaseSuffix'])) {
+            $this->preReleaseSuffix = new PreReleaseSuffix($matches['PreReleaseSuffix']);
         }
     }
 
@@ -167,10 +162,7 @@ class Version {
             )?
             (?:
                 -
-                (?<ReleaseType>(?:(dev|beta|b|RC|alpha|a|patch|p)))
-                (?:
-                    (?<ReleaseTypeCount>[0-9])
-                )?
+                (?<PreReleaseSuffix>(?:(dev|beta|b|RC|alpha|a|patch|p)\d*))
             )?       
         $/x';
 
