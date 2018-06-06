@@ -109,6 +109,17 @@ class VersionConstraintParserTest extends TestCase {
                         )
                     ]
                 )
+            ],
+            ['7.0.28-1', new ExactVersionConstraint('7.0.28-1')],
+            [
+                '^3.0.0-alpha1',
+                new AndVersionConstraintGroup(
+                    '^3.0.0-alpha1',
+                    [
+                        new GreaterThanOrEqualToVersionConstraint('^3.0.0-alpha1', new Version('3.0.0-alpha1')),
+                        new SpecificMajorVersionConstraint('^3.0.0-alpha1', 3)
+                    ]
+                )
             ]
         ];
     }
