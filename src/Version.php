@@ -54,9 +54,12 @@ class Version {
         $this->patch = isset($matches['Patch']) ? new VersionNumber($matches['Patch']) : new VersionNumber(null);
 
         if (isset($matches['ReleaseType'])) {
-            $preReleaseNumber = isset($matches['ReleaseTypeCount']) ? (int) $matches['ReleaseTypeCount'] : null;
+            $suffix = $matches['ReleaseType'];
+            if (isset($matches['ReleaseTypeCount'])) {
+                $suffix .= $matches['ReleaseTypeCount'];
+            }
 
-            $this->preReleaseSuffix = new PreReleaseSuffix($matches['ReleaseType'], $preReleaseNumber);
+            $this->preReleaseSuffix = new PreReleaseSuffix($suffix);
         }
     }
 
@@ -73,6 +76,14 @@ class Version {
      */
     public function getVersionString() {
         return $this->versionString;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPreReleaseSuffix()
+    {
+        return $this->preReleaseSuffix !== null;
     }
 
     /**
@@ -97,7 +108,7 @@ class Version {
             return true;
         }
 
-        if ($version->getPatch()->getValue() >= $this->getPatch()->getValue()) {
+        if ($version->getPatch()->getValue() > $this->getPatch()->getValue()) {
             return false;
         }
 
@@ -105,7 +116,19 @@ class Version {
             return true;
         }
 
-        return false;
+        if (!$version->hasPreReleaseSuffix() && !$this->hasPreReleaseSuffix()) {
+            return false;
+        }
+
+        if ($version->hasPreReleaseSuffix() && !$this->hasPreReleaseSuffix()) {
+            return false;
+        }
+
+        if (!$version->hasPreReleaseSuffix() && $this->hasPreReleaseSuffix()) {
+            return true;
+        }
+
+        return $this->getPreReleaseSuffix()->isGreaterThan($version->getPreReleaseSuffix());
     }
 
     /**

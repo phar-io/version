@@ -75,6 +75,8 @@ class VersionTest extends TestCase {
             [new Version('2.5.8'), new Version('1.6.8'), true],
             [new Version('2.5.8'), new Version('2.6.8'), false],
             [new Version('2.5.8'), new Version('3.1.2'), false],
+            [new Version('3.0.0-alpha1'), new Version('3.0.0-alpha2'), false],
+            [new Version('3.0.0-alpha2'), new Version('3.0.0-alpha1'), true],
         ];
     }
 
