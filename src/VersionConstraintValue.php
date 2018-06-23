@@ -1,8 +1,8 @@
 <?php
+
 namespace PharIo\Version;
 
-class VersionConstraintValue
-{
+class VersionConstraintValue {
     /**
      * @var VersionNumber
      */
@@ -40,43 +40,6 @@ class VersionConstraintValue
         $this->versionString = $versionString;
 
         $this->parseVersion($versionString);
-    }
-
-    /**
-     * @param $versionString
-     */
-    private function parseVersion($versionString) {
-        $this->extractBuildMetaData($versionString);
-        $this->extractLabel($versionString);
-
-        $versionSegments = explode('.', $versionString);
-        $this->major     = new VersionNumber($versionSegments[0]);
-
-        $minorValue = isset($versionSegments[1]) ? $versionSegments[1] : null;
-        $patchValue = isset($versionSegments[2]) ? $versionSegments[2] : null;
-
-        $this->minor = new VersionNumber($minorValue);
-        $this->patch = new VersionNumber($patchValue);
-    }
-
-    /**
-     * @param string $versionString
-     */
-    private function extractBuildMetaData(&$versionString) {
-        if (preg_match('/\+(.*)/', $versionString, $matches) == 1) {
-            $this->buildMetaData = $matches[1];
-            $versionString       = str_replace($matches[0], '', $versionString);
-        }
-    }
-
-    /**
-     * @param string $versionString
-     */
-    private function extractLabel(&$versionString) {
-        if (preg_match('/\-(.*)/', $versionString, $matches) == 1) {
-            $this->label   = $matches[1];
-            $versionString = str_replace($matches[0], '', $versionString);
-        }
     }
 
     /**
@@ -119,5 +82,42 @@ class VersionConstraintValue
      */
     public function getPatch() {
         return $this->patch;
+    }
+
+    /**
+     * @param $versionString
+     */
+    private function parseVersion($versionString) {
+        $this->extractBuildMetaData($versionString);
+        $this->extractLabel($versionString);
+
+        $versionSegments = explode('.', $versionString);
+        $this->major = new VersionNumber($versionSegments[0]);
+
+        $minorValue = isset($versionSegments[1]) ? $versionSegments[1] : null;
+        $patchValue = isset($versionSegments[2]) ? $versionSegments[2] : null;
+
+        $this->minor = new VersionNumber($minorValue);
+        $this->patch = new VersionNumber($patchValue);
+    }
+
+    /**
+     * @param string $versionString
+     */
+    private function extractBuildMetaData(&$versionString) {
+        if (preg_match('/\+(.*)/', $versionString, $matches) == 1) {
+            $this->buildMetaData = $matches[1];
+            $versionString = str_replace($matches[0], '', $versionString);
+        }
+    }
+
+    /**
+     * @param string $versionString
+     */
+    private function extractLabel(&$versionString) {
+        if (preg_match('/\-(.*)/', $versionString, $matches) == 1) {
+            $this->label = $matches[1];
+            $versionString = str_replace($matches[0], '', $versionString);
+        }
     }
 }

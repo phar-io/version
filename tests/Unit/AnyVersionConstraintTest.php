@@ -13,7 +13,7 @@ namespace PharIo\Version;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers PharIo\Version\AnyVersionConstraint
+ * @covers \PharIo\Version\AnyVersionConstraint
  */
 class AnyVersionConstraintTest extends TestCase {
     public function versionProvider() {

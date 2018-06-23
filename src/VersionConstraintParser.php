@@ -24,7 +24,7 @@ class VersionConstraintParser {
             return $this->handleOrGroup($value);
         }
 
-        if (!preg_match('/^[\^~\*]?[\d.\*]+$/', $value)) {
+        if (!preg_match('/^[\^~\*]?[\d.\*]+(?:-.*)?$/', $value)) {
             throw new UnsupportedVersionConstraintException(
                 sprintf('Version constraint %s is not supported.', $value)
             );
@@ -45,20 +45,20 @@ class VersionConstraintParser {
 
         if ($version->getMinor()->isAny()) {
             return new SpecificMajorVersionConstraint(
-                $value,
+                $version->getVersionString(),
                 $version->getMajor()->getValue()
             );
         }
 
         if ($version->getPatch()->isAny()) {
             return new SpecificMajorAndMinorVersionConstraint(
-                $value,
+                $version->getVersionString(),
                 $version->getMajor()->getValue(),
                 $version->getMinor()->getValue()
             );
         }
 
-        return new ExactVersionConstraint($value);
+        return new ExactVersionConstraint($version->getVersionString());
     }
 
     /**
@@ -82,7 +82,7 @@ class VersionConstraintParser {
      * @return AndVersionConstraintGroup
      */
     private function handleTildeOperator($value) {
-        $version     = new Version(substr($value, 1));
+        $version = new Version(substr($value, 1));
         $constraints = [
             new GreaterThanOrEqualToVersionConstraint($value, $version)
         ];

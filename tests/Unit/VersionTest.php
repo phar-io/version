@@ -24,9 +24,16 @@ class VersionTest extends TestCase {
      * @param string $expectedMinor
      * @param string $expectedPatch
      * @param string $expectedPreReleaseValue
-     * @param int    $expectedReleaseCount
+     * @param int $expectedReleaseCount
      */
-    public function testParsesVersionNumbers($versionString, $expectedMajor, $expectedMinor, $expectedPatch, $expectedPreReleaseValue = '', $expectedReleaseCount = 0) {
+    public function testParsesVersionNumbers(
+        $versionString,
+        $expectedMajor,
+        $expectedMinor,
+        $expectedPatch,
+        $expectedPreReleaseValue = '',
+        $expectedReleaseCount = 0
+    ) {
         $version = new Version($versionString);
 
         $this->assertSame($expectedMajor, $version->getMajor()->getValue());
@@ -56,7 +63,7 @@ class VersionTest extends TestCase {
      *
      * @param Version $versionA
      * @param Version $versionB
-     * @param bool    $expectedResult
+     * @param bool $expectedResult
      */
     public function testIsGreaterThan(Version $versionA, Version $versionB, $expectedResult) {
         $this->assertSame($expectedResult, $versionA->isGreaterThan($versionB));
@@ -75,6 +82,8 @@ class VersionTest extends TestCase {
             [new Version('2.5.8'), new Version('1.6.8'), true],
             [new Version('2.5.8'), new Version('2.6.8'), false],
             [new Version('2.5.8'), new Version('3.1.2'), false],
+            [new Version('3.0.0-alpha1'), new Version('3.0.0-alpha2'), false],
+            [new Version('3.0.0-alpha2'), new Version('3.0.0-alpha1'), true],
         ];
     }
 
@@ -83,8 +92,7 @@ class VersionTest extends TestCase {
      *
      * @param string $versionString
      */
-    public function testThrowsExceptionIfVersionStringDoesNotFollowSemVer($versionString)
-    {
+    public function testThrowsExceptionIfVersionStringDoesNotFollowSemVer($versionString) {
         $this->expectException(InvalidVersionException::class);
         new Version($versionString);
     }
@@ -92,8 +100,7 @@ class VersionTest extends TestCase {
     /**
      * @return array
      */
-    public function invalidVersionStringProvider()
-    {
+    public function invalidVersionStringProvider() {
         return [
             ['foo'],
             ['0.0.1-dev+ABC', '0', '0', '1', 'dev', 'ABC'],
