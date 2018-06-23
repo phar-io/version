@@ -47,3 +47,15 @@ $tilde_constraint = $parser->parse( '~1.1.0' );
 $tilde_constraint->complies( new Version( '1.1.4' ) ); // true
 $tilde_constraint->complies( new Version( '1.2.0' ) ); // false
 ```
+
+As of version 2.0.0, pre-release labels are supported and taken into account when comparing versions:
+
+```php
+
+$leftVersion = new PharIo\Version\Version('3.0.0-alpha.1');
+$rightVersion = new PharIo\Version\Version('3.0.0-alpha.2');
+
+$leftVersion->isGreaterThan($rightVersion); // false
+$rightVersion->isGreaterThan($leftVersion); // true
+
+``` 
