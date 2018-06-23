@@ -46,23 +46,9 @@ class Version {
     }
 
     /**
-     * @param array $matches
-     */
-    private function parseVersion(array $matches) {
-        $this->major = new VersionNumber($matches['Major']);
-        $this->minor = new VersionNumber($matches['Minor']);
-        $this->patch = isset($matches['Patch']) ? new VersionNumber($matches['Patch']) : new VersionNumber(null);
-
-        if (isset($matches['PreReleaseSuffix'])) {
-            $this->preReleaseSuffix = new PreReleaseSuffix($matches['PreReleaseSuffix']);
-        }
-    }
-
-    /**
      * @return PreReleaseSuffix
      */
-    public function getPreReleaseSuffix()
-    {
+    public function getPreReleaseSuffix() {
         return $this->preReleaseSuffix;
     }
 
@@ -76,8 +62,7 @@ class Version {
     /**
      * @return bool
      */
-    public function hasPreReleaseSuffix()
-    {
+    public function hasPreReleaseSuffix() {
         return $this->preReleaseSuffix !== null;
     }
 
@@ -145,6 +130,19 @@ class Version {
      */
     public function getPatch() {
         return $this->patch;
+    }
+
+    /**
+     * @param array $matches
+     */
+    private function parseVersion(array $matches) {
+        $this->major = new VersionNumber($matches['Major']);
+        $this->minor = new VersionNumber($matches['Minor']);
+        $this->patch = isset($matches['Patch']) ? new VersionNumber($matches['Patch']) : new VersionNumber(null);
+
+        if (isset($matches['PreReleaseSuffix'])) {
+            $this->preReleaseSuffix = new PreReleaseSuffix($matches['PreReleaseSuffix']);
+        }
     }
 
     /**

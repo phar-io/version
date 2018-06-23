@@ -1,8 +1,8 @@
 <?php
+
 namespace PharIo\Version;
 
-class PreReleaseSuffix
-{
+class PreReleaseSuffix {
     private $valueScoreMap = [
         'dev' => 0,
         'a' => 1,
@@ -32,33 +32,30 @@ class PreReleaseSuffix
     /**
      * @param string $value
      */
-    public function __construct($value)
-    {
+    public function __construct($value) {
         $this->parseValue($value);
     }
 
     /**
      * @return string
      */
-    public function getValue()
-    {
+    public function getValue() {
         return $this->value;
     }
 
     /**
      * @return int|null
      */
-    public function getNumber()
-    {
+    public function getNumber() {
         return $this->number;
     }
 
     /**
      * @param PreReleaseSuffix $suffix
+     *
      * @return bool
      */
-    public function isGreaterThan(PreReleaseSuffix $suffix)
-    {
+    public function isGreaterThan(PreReleaseSuffix $suffix) {
         if ($this->valueScore > $suffix->valueScore) {
             return true;
         }
@@ -72,10 +69,10 @@ class PreReleaseSuffix
 
     /**
      * @param $value
+     *
      * @return int
      */
-    private function mapValueToScore($value)
-    {
+    private function mapValueToScore($value) {
         if (array_key_exists($value, $this->valueScoreMap)) {
             return $this->valueScoreMap[$value];
         }
@@ -83,8 +80,7 @@ class PreReleaseSuffix
         return 0;
     }
 
-    private function parseValue($value)
-    {
+    private function parseValue($value) {
         $regex = '/-?(dev|beta|b|rc|alpha|a|patch|p)(\d*).*$/i';
         if (preg_match($regex, $value, $matches) !== 1) {
             throw new InvalidPreReleaseSuffixException(sprintf('Invalid label %s', $value));

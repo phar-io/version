@@ -18,7 +18,7 @@ class SpecificMajorVersionConstraint extends AbstractVersionConstraint {
 
     /**
      * @param string $originalValue
-     * @param int    $major
+     * @param int $major
      */
     public function __construct($originalValue, $major) {
         parent::__construct($originalValue);

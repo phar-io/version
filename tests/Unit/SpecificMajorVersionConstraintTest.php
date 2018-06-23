@@ -13,7 +13,7 @@ namespace PharIo\Version;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers PharIo\Version\SpecificMajorVersionConstraint
+ * @covers \PharIo\Version\SpecificMajorVersionConstraint
  */
 class SpecificMajorVersionConstraintTest extends TestCase {
     public function versionProvider() {
@@ -32,9 +32,9 @@ class SpecificMajorVersionConstraintTest extends TestCase {
     /**
      * @dataProvider versionProvider
      *
-     * @param int     $major
+     * @param int $major
      * @param Version $version
-     * @param bool    $expectedResult
+     * @param bool $expectedResult
      */
     public function testReturnsTrueForCompliantVersions($major, Version $version, $expectedResult) {
         $constraint = new SpecificMajorVersionConstraint('foo', $major);

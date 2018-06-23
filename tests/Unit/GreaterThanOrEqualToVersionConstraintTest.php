@@ -13,7 +13,7 @@ namespace PharIo\Version;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers PharIo\Version\GreaterThanOrEqualToVersionConstraint
+ * @covers \PharIo\Version\GreaterThanOrEqualToVersionConstraint
  */
 class GreaterThanOrEqualToVersionConstraintTest extends TestCase {
     public function versionProvider() {
@@ -37,7 +37,7 @@ class GreaterThanOrEqualToVersionConstraintTest extends TestCase {
      *
      * @param Version $constraintVersion
      * @param Version $version
-     * @param bool    $expectedResult
+     * @param bool $expectedResult
      */
     public function testReturnsTrueForCompliantVersions(Version $constraintVersion, Version $version, $expectedResult) {
         $constraint = new GreaterThanOrEqualToVersionConstraint('foo', $constraintVersion);

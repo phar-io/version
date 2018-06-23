@@ -17,7 +17,7 @@ class AndVersionConstraintGroup extends AbstractVersionConstraint {
     private $constraints = [];
 
     /**
-     * @param string              $originalValue
+     * @param string $originalValue
      * @param VersionConstraint[] $constraints
      */
     public function __construct($originalValue, array $constraints) {

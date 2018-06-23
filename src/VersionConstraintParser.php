@@ -82,7 +82,7 @@ class VersionConstraintParser {
      * @return AndVersionConstraintGroup
      */
     private function handleTildeOperator($value) {
-        $version     = new Version(substr($value, 1));
+        $version = new Version(substr($value, 1));
         $constraints = [
             new GreaterThanOrEqualToVersionConstraint($value, $version)
         ];

@@ -19,7 +19,7 @@ class VersionConstraintParserTest extends TestCase {
     /**
      * @dataProvider versionStringProvider
      *
-     * @param string            $versionString
+     * @param string $versionString
      * @param VersionConstraint $expectedConstraint
      */
     public function testReturnsExpectedConstraint($versionString, VersionConstraint $expectedConstraint) {

@@ -13,7 +13,7 @@ namespace PharIo\Version;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers PharIo\Version\ExactVersionConstraint
+ * @covers \PharIo\Version\ExactVersionConstraint
  */
 class ExactVersionConstraintTest extends TestCase {
     public function compliantVersionProvider() {
@@ -35,7 +35,7 @@ class ExactVersionConstraintTest extends TestCase {
     /**
      * @dataProvider compliantVersionProvider
      *
-     * @param string  $constraintValue
+     * @param string $constraintValue
      * @param Version $version
      */
     public function testReturnsTrueForCompliantVersion($constraintValue, Version $version) {
@@ -47,7 +47,7 @@ class ExactVersionConstraintTest extends TestCase {
     /**
      * @dataProvider nonCompliantVersionProvider
      *
-     * @param string  $constraintValue
+     * @param string $constraintValue
      * @param Version $version
      */
     public function testReturnsFalseForNonCompliantVersion($constraintValue, Version $version) {
