@@ -2,13 +2,17 @@
 
 All notable changes to phar-io/version are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased]
+## [2.0.0] - 23.06.2018
 
-This release contains **breaking changes**
+Changes to public API:
+
+- `PreReleaseSuffix::construct()`: optional parameter `$number` removed
+- `PreReleaseSuffix::isGreaterThan()`: introduced
+- `Version::hasPreReleaseSuffix()`: introduced
 
 ### Added
 
-- [#11](https://github.com/phar-io/version/issues/11): [**breaking change**] Added support for pre-release version suffixes. Supported values are:
+- [#11](https://github.com/phar-io/version/issues/11): Added support for pre-release version suffixes. Supported values are:
   - `dev`
   - `beta` (also abbreviated form `b`)
   - `rc`
@@ -26,7 +30,7 @@ This release contains **breaking changes**
 
 ### Fixed
 
-[#10](https://github.com/phar-io/version/issues/10): Version numbers containing 
+- [#10](https://github.com/phar-io/version/issues/10): Version numbers containing 
 a numeric suffix as seen in Debian packages are now supported.  
 
-[Unreleased]: https://github.com/phar-io/version/compare/1.0.1...HEAD
+[2.0.0]: https://github.com/phar-io/version/compare/1.0.1...2.0.0
