@@ -160,7 +160,7 @@ class Version {
             )?
             (?:
                 -
-                (?<PreReleaseSuffix>(?:(dev|beta|b|RC|alpha|a|patch|p)\d*))
+                (?<PreReleaseSuffix>(?:(dev|beta|b|RC|alpha|a|patch|p)\.?\d*))
             )?       
         $/x';
 

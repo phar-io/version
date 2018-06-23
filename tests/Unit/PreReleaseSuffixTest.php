@@ -38,6 +38,9 @@ class PreReleaseSuffixTest extends TestCase {
             ['alpha2', 'dev5', true],
             ['rc1', 'beta2', true],
             ['patch5', 'rc7', true],
+            ['alpha1', 'alpha.2', false],
+            ['alpha.3', 'alpha2', true],
+            ['alpha.3', 'alpha.2', true],
         ];
     }
 }

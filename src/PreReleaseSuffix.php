@@ -81,7 +81,7 @@ class PreReleaseSuffix {
     }
 
     private function parseValue($value) {
-        $regex = '/-?(dev|beta|b|rc|alpha|a|patch|p)(\d*).*$/i';
+        $regex = '/-?(dev|beta|b|rc|alpha|a|patch|p)\.?(\d*).*$/i';
         if (preg_match($regex, $value, $matches) !== 1) {
             throw new InvalidPreReleaseSuffixException(sprintf('Invalid label %s', $value));
         }
