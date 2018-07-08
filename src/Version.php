@@ -101,11 +101,11 @@ class Version {
         }
 
         if ($version->hasPreReleaseSuffix() && !$this->hasPreReleaseSuffix()) {
-            return false;
+            return true;
         }
 
         if (!$version->hasPreReleaseSuffix() && $this->hasPreReleaseSuffix()) {
-            return true;
+            return false;
         }
 
         return $this->getPreReleaseSuffix()->isGreaterThan($version->getPreReleaseSuffix());
