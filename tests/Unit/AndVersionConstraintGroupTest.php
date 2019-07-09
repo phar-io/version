@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /*
  * This file is part of PharIo\Version.
  *
@@ -7,7 +7,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace PharIo\Version;
 
 use PHPUnit\Framework\TestCase;
@@ -16,8 +15,8 @@ use PHPUnit\Framework\TestCase;
  * @covers \PharIo\Version\AndVersionConstraintGroup
  */
 class AndVersionConstraintGroupTest extends TestCase {
-    public function testReturnsFalseIfOneConstraintReturnsFalse() {
-        $firstConstraint = $this->createMock(VersionConstraint::class);
+    public function testReturnsFalseIfOneConstraintReturnsFalse(): void {
+        $firstConstraint  = $this->createMock(VersionConstraint::class);
         $secondConstraint = $this->createMock(VersionConstraint::class);
 
         $firstConstraint->expects($this->once())
@@ -33,8 +32,8 @@ class AndVersionConstraintGroupTest extends TestCase {
         $this->assertFalse($group->complies(new Version('1.0.0')));
     }
 
-    public function testReturnsTrueIfAllConstraintsReturnsTrue() {
-        $firstConstraint = $this->createMock(VersionConstraint::class);
+    public function testReturnsTrueIfAllConstraintsReturnsTrue(): void {
+        $firstConstraint  = $this->createMock(VersionConstraint::class);
         $secondConstraint = $this->createMock(VersionConstraint::class);
 
         $firstConstraint->expects($this->once())

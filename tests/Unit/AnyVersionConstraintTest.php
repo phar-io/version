@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /*
  * This file is part of PharIo\Version.
  *
@@ -7,7 +7,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace PharIo\Version;
 
 use PHPUnit\Framework\TestCase;
@@ -26,16 +25,14 @@ class AnyVersionConstraintTest extends TestCase {
 
     /**
      * @dataProvider versionProvider
-     *
-     * @param Version $version
      */
-    public function testReturnsTrue(Version $version) {
+    public function testReturnsTrue(Version $version): void {
         $constraint = new AnyVersionConstraint;
 
         $this->assertTrue($constraint->complies($version));
     }
 
-    public function testAsString() {
+    public function testAsString(): void {
         $this->assertSame('*', (new AnyVersionConstraint())->asString());
     }
 }

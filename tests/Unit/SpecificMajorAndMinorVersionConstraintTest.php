@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /*
  * This file is part of PharIo\Version.
  *
@@ -7,7 +7,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace PharIo\Version;
 
 use PHPUnit\Framework\TestCase;
@@ -32,12 +31,11 @@ class SpecificMajorAndMinorVersionConstraintTest extends TestCase {
     /**
      * @dataProvider versionProvider
      *
-     * @param int $major
-     * @param int $minor
-     * @param Version $version
+     * @param int  $major
+     * @param int  $minor
      * @param bool $expectedResult
      */
-    public function testReturnsTrueForCompliantVersions($major, $minor, Version $version, $expectedResult) {
+    public function testReturnsTrueForCompliantVersions($major, $minor, Version $version, $expectedResult): void {
         $constraint = new SpecificMajorAndMinorVersionConstraint('foo', $major, $minor);
 
         $this->assertSame($expectedResult, $constraint->complies($version));

@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types = 1);
 namespace PharIo\Version;
 
 use PHPUnit\Framework\TestCase;
@@ -13,14 +12,14 @@ class PreReleaseSuffixTest extends TestCase {
      *
      * @param string $leftSuffixValue
      * @param string $rightSuffixValue
-     * @param bool $expectedResult
+     * @param bool   $expectedResult
      */
     public function testGreaterThanReturnsExpectedResult(
         $leftSuffixValue,
         $rightSuffixValue,
         $expectedResult
-    ) {
-        $leftSuffix = new PreReleaseSuffix($leftSuffixValue);
+    ): void {
+        $leftSuffix  = new PreReleaseSuffix($leftSuffixValue);
         $rightSuffix = new PreReleaseSuffix($rightSuffixValue);
 
         $this->assertSame($expectedResult, $leftSuffix->isGreaterThan($rightSuffix));

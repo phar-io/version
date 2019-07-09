@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /*
  * This file is part of PharIo\Version.
  *
@@ -7,7 +7,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace PharIo\Version;
 
 use PHPUnit\Framework\TestCase;
@@ -20,9 +19,8 @@ class VersionConstraintParserTest extends TestCase {
      * @dataProvider versionStringProvider
      *
      * @param string $versionString
-     * @param VersionConstraint $expectedConstraint
      */
-    public function testReturnsExpectedConstraint($versionString, VersionConstraint $expectedConstraint) {
+    public function testReturnsExpectedConstraint($versionString, VersionConstraint $expectedConstraint): void {
         $parser = new VersionConstraintParser;
 
         $this->assertEquals($expectedConstraint, $parser->parse($versionString));
@@ -33,7 +31,7 @@ class VersionConstraintParserTest extends TestCase {
      *
      * @param string $versionString
      */
-    public function testThrowsExceptionIfVersionStringIsNotSupported($versionString) {
+    public function testThrowsExceptionIfVersionStringIsNotSupported($versionString): void {
         $parser = new VersionConstraintParser;
 
         $this->expectException(UnsupportedVersionConstraintException::class);
@@ -41,10 +39,7 @@ class VersionConstraintParserTest extends TestCase {
         $parser->parse($versionString);
     }
 
-    /**
-     * @return array
-     */
-    public function versionStringProvider() {
+    public function versionStringProvider(): array {
         return [
             ['1.0.2', new ExactVersionConstraint('1.0.2')],
             [
@@ -96,13 +91,15 @@ class VersionConstraintParserTest extends TestCase {
                     '^5.6 || ^7.0',
                     [
                         new AndVersionConstraintGroup(
-                            '^5.6', [
+                            '^5.6',
+                            [
                                 new GreaterThanOrEqualToVersionConstraint('^5.6', new Version('5.6')),
                                 new SpecificMajorVersionConstraint('^5.6', 5)
                             ]
                         ),
                         new AndVersionConstraintGroup(
-                            '^7.0', [
+                            '^7.0',
+                            [
                                 new GreaterThanOrEqualToVersionConstraint('^7.0', new Version('7.0')),
                                 new SpecificMajorVersionConstraint('^7.0', 7)
                             ]

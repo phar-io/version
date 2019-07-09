@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /*
  * This file is part of PharIo\Version.
  *
@@ -7,7 +7,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace PharIo\Version;
 
 use PHPUnit\Framework\TestCase;
@@ -24,7 +23,7 @@ class VersionTest extends TestCase {
      * @param string $expectedMinor
      * @param string $expectedPatch
      * @param string $expectedPreReleaseValue
-     * @param int $expectedReleaseCount
+     * @param int    $expectedReleaseCount
      */
     public function testParsesVersionNumbers(
         $versionString,
@@ -33,15 +32,17 @@ class VersionTest extends TestCase {
         $expectedPatch,
         $expectedPreReleaseValue = '',
         $expectedReleaseCount = 0
-    ) {
+    ): void {
         $version = new Version($versionString);
 
         $this->assertSame($expectedMajor, $version->getMajor()->getValue());
         $this->assertSame($expectedMinor, $version->getMinor()->getValue());
         $this->assertSame($expectedPatch, $version->getPatch()->getValue());
+
         if ($expectedPreReleaseValue !== '') {
             $this->assertSame($expectedPreReleaseValue, $version->getPreReleaseSuffix()->getValue());
         }
+
         if ($expectedReleaseCount !== 0) {
             $this->assertSame($expectedReleaseCount, $version->getPreReleaseSuffix()->getNumber());
         }
@@ -61,18 +62,13 @@ class VersionTest extends TestCase {
     /**
      * @dataProvider versionGreaterThanProvider
      *
-     * @param Version $versionA
-     * @param Version $versionB
      * @param bool $expectedResult
      */
-    public function testIsGreaterThan(Version $versionA, Version $versionB, $expectedResult) {
+    public function testIsGreaterThan(Version $versionA, Version $versionB, $expectedResult): void {
         $this->assertSame($expectedResult, $versionA->isGreaterThan($versionB));
     }
 
-    /**
-     * @return array
-     */
-    public function versionGreaterThanProvider() {
+    public function versionGreaterThanProvider(): array {
         return [
             [new Version('1.0.0'), new Version('1.0.1'), false],
             [new Version('1.0.1'), new Version('1.0.0'), true],
@@ -94,20 +90,16 @@ class VersionTest extends TestCase {
      *
      * @param string $versionString
      */
-    public function testThrowsExceptionIfVersionStringDoesNotFollowSemVer($versionString) {
+    public function testThrowsExceptionIfVersionStringDoesNotFollowSemVer($versionString): void {
         $this->expectException(InvalidVersionException::class);
         new Version($versionString);
     }
 
-    /**
-     * @return array
-     */
-    public function invalidVersionStringProvider() {
+    public function invalidVersionStringProvider(): array {
         return [
             ['foo'],
             ['0.0.1-dev+ABC', '0', '0', '1', 'dev', 'ABC'],
             ['1.0.0-x.7.z.92', '1', '0', '0', 'x.7.z.92']
         ];
     }
-
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /*
  * This file is part of PharIo\Version.
  *
@@ -7,7 +7,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace PharIo\Version;
 
 use PHPUnit\Framework\TestCase;
@@ -35,11 +34,9 @@ class GreaterThanOrEqualToVersionConstraintTest extends TestCase {
     /**
      * @dataProvider versionProvider
      *
-     * @param Version $constraintVersion
-     * @param Version $version
      * @param bool $expectedResult
      */
-    public function testReturnsTrueForCompliantVersions(Version $constraintVersion, Version $version, $expectedResult) {
+    public function testReturnsTrueForCompliantVersions(Version $constraintVersion, Version $version, $expectedResult): void {
         $constraint = new GreaterThanOrEqualToVersionConstraint('foo', $constraintVersion);
 
         $this->assertSame($expectedResult, $constraint->complies($version));

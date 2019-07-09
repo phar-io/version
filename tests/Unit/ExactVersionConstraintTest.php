@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 /*
  * This file is part of PharIo\Version.
  *
@@ -7,7 +7,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace PharIo\Version;
 
 use PHPUnit\Framework\TestCase;
@@ -36,9 +35,8 @@ class ExactVersionConstraintTest extends TestCase {
      * @dataProvider compliantVersionProvider
      *
      * @param string $constraintValue
-     * @param Version $version
      */
-    public function testReturnsTrueForCompliantVersion($constraintValue, Version $version) {
+    public function testReturnsTrueForCompliantVersion($constraintValue, Version $version): void {
         $constraint = new ExactVersionConstraint($constraintValue);
 
         $this->assertTrue($constraint->complies($version));
@@ -48,9 +46,8 @@ class ExactVersionConstraintTest extends TestCase {
      * @dataProvider nonCompliantVersionProvider
      *
      * @param string $constraintValue
-     * @param Version $version
      */
-    public function testReturnsFalseForNonCompliantVersion($constraintValue, Version $version) {
+    public function testReturnsFalseForNonCompliantVersion($constraintValue, Version $version): void {
         $constraint = new ExactVersionConstraint($constraintValue);
 
         $this->assertFalse($constraint->complies($version));
