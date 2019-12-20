@@ -1,7 +1,19 @@
-os:
-- linux
-
 language: php
+
+matrix:
+  include:
+    - php: 5.6
+      dist: xenial
+    - php: 7.0
+      dist: xenial
+    - php: 7.1
+      dist: bionic
+    - php: 7.2
+      dist: bionic
+    - php: 7.3
+      dist: bionic
+    - php: 7.4
+      dist: bionic
 
 before_install:
   - wget https://phar.io/releases/phive.phar
@@ -11,23 +23,9 @@ before_install:
   - chmod +x phive.phar
   - sudo mv phive.phar /usr/bin/phive
 
-install:
-  - ant setup
+install: ant setup
 
 script: ./tools/phpunit
-
-php:
-  - 5.6
-  - 7.0
-  - 7.1
-  - 7.0snapshot
-  - 7.1snapshot
-  - master
-
-matrix:
-  allow_failures:
-    - php: master
-  fast_finish: true
 
 notifications:
   email: false
