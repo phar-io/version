@@ -7,7 +7,7 @@
          beStrictAboutTestsThatDoNotTestAnything="true"
          beStrictAboutTodoAnnotatedTests="true"
          verbose="true">
-    <testsuite>
+    <testsuite name='tests'>
         <directory suffix="Test.php">tests</directory>
     </testsuite>
 
