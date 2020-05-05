@@ -59,12 +59,13 @@ class VersionConstraintValue {
     private function parseVersion($versionString): void {
         $this->extractBuildMetaData($versionString);
         $this->extractLabel($versionString);
+        $this->stripPotentialVPrefix($versionString);
 
         $versionSegments = \explode('.', $versionString);
-        $this->major     = new VersionNumber($versionSegments[0]);
+        $this->major     = new VersionNumber(\is_numeric($versionSegments[0]) ? (int)$versionSegments[0] : null);
 
-        $minorValue = $versionSegments[1] ?? null;
-        $patchValue = $versionSegments[2] ?? null;
+        $minorValue = isset($versionSegments[1]) && \is_numeric($versionSegments[1]) ? (int)$versionSegments[1] : null;
+        $patchValue = isset($versionSegments[2]) && \is_numeric($versionSegments[2]) ? (int)$versionSegments[2] : null;
 
         $this->minor = new VersionNumber($minorValue);
         $this->patch = new VersionNumber($patchValue);
@@ -74,7 +75,7 @@ class VersionConstraintValue {
      * @param string $versionString
      */
     private function extractBuildMetaData(&$versionString): void {
-        if (\preg_match('/\+(.*)/', $versionString, $matches) == 1) {
+        if (\preg_match('/\+(.*)/', $versionString, $matches) === 1) {
             $this->buildMetaData = $matches[1];
             $versionString       = \str_replace($matches[0], '', $versionString);
         }
@@ -84,9 +85,16 @@ class VersionConstraintValue {
      * @param string $versionString
      */
     private function extractLabel(&$versionString): void {
-        if (\preg_match('/\-(.*)/', $versionString, $matches) == 1) {
+        if (\preg_match('/-(.*)/', $versionString, $matches) === 1) {
             $this->label   = $matches[1];
             $versionString = \str_replace($matches[0], '', $versionString);
         }
+    }
+
+    private function stripPotentialVPrefix(&$versionString): void {
+        if ($versionString[0] !== 'v') {
+            return;
+        }
+        $versionString = \substr($versionString, 1);
     }
 }

@@ -99,9 +99,9 @@ class Version {
     }
 
     private function parseVersion(array $matches): void {
-        $this->major = new VersionNumber($matches['Major']);
-        $this->minor = new VersionNumber($matches['Minor']);
-        $this->patch = isset($matches['Patch']) ? new VersionNumber($matches['Patch']) : new VersionNumber(null);
+        $this->major = new VersionNumber((int)$matches['Major']);
+        $this->minor = new VersionNumber((int)$matches['Minor']);
+        $this->patch = isset($matches['Patch']) ? new VersionNumber((int)$matches['Patch']) : new VersionNumber(null);
 
         if (isset($matches['PreReleaseSuffix'])) {
             $this->preReleaseSuffix = new PreReleaseSuffix($matches['PreReleaseSuffix']);
@@ -115,17 +115,17 @@ class Version {
      */
     private function ensureVersionStringIsValid($version): void {
         $regex = '/^v?
-            (?<Major>(0|(?:[1-9][0-9]*)))
+            (?<Major>(0|(?:[1-9]\d*)))
             \\.
-            (?<Minor>(0|(?:[1-9][0-9]*)))
+            (?<Minor>(0|(?:[1-9]\d*)))
             (\\.
-                (?<Patch>(0|(?:[1-9][0-9]*)))
+                (?<Patch>(0|(?:[1-9]\d*)))
             )?
             (?:
                 -
-                (?<PreReleaseSuffix>(?:(dev|beta|b|RC|alpha|a|patch|p)\.?\d*))
+                (?<PreReleaseSuffix>(?:(dev|beta|b|rc|alpha|a|patch|p)\.?\d*))
             )?       
-        $/x';
+        $/xi';
 
         if (\preg_match($regex, $version, $matches) !== 1) {
             throw new InvalidVersionException(

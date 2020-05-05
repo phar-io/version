@@ -52,10 +52,11 @@ class VersionTest extends TestCase {
 
     public function versionProvider() {
         return [
-            ['0.0.1', '0', '0', '1'],
-            ['0.1.2', '0', '1', '2'],
-            ['1.0.0-alpha', '1', '0', '0', 'alpha'],
-            ['3.4.12-dev3', '3', '4', '12', 'dev', 3],
+            ['0.0.1', 0, 0, 1],
+            ['0.1.2', 0, 1, 2],
+            ['1.0.0-alpha', 1, 0, 0, 'alpha'],
+            ['3.4.12-dev3', 3, 4, 12, 'dev', 3],
+            ['v1.2.3-rc', 1, 2, 3, 'rc']
         ];
     }
 
