@@ -4,5 +4,5 @@
 /src/autoload.php
 /tools
 /vendor
-
 build/coverage
+.phpunit.result.cache
