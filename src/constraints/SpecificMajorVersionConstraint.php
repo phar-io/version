@@ -24,6 +24,6 @@ class SpecificMajorVersionConstraint extends AbstractVersionConstraint {
     }
 
     public function complies(Version $version): bool {
-        return $version->getMajor()->getValue() == $this->major;
+        return $version->getMajor()->getValue() === $this->major;
     }
 }

@@ -29,10 +29,10 @@ class SpecificMajorAndMinorVersionConstraint extends AbstractVersionConstraint {
     }
 
     public function complies(Version $version): bool {
-        if ($version->getMajor()->getValue() != $this->major) {
+        if ($version->getMajor()->getValue() !== $this->major) {
             return false;
         }
 
-        return $version->getMinor()->getValue() == $this->minor;
+        return $version->getMinor()->getValue() === $this->minor;
     }
 }

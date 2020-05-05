@@ -23,7 +23,7 @@ class GreaterThanOrEqualToVersionConstraint extends AbstractVersionConstraint {
     }
 
     public function complies(Version $version): bool {
-        return $version->getVersionString() == $this->minimalVersion->getVersionString()
+        return $version->getVersionString() === $this->minimalVersion->getVersionString()
             || $version->isGreaterThan($this->minimalVersion);
     }
 }

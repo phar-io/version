@@ -11,6 +11,6 @@ namespace PharIo\Version;
 
 class ExactVersionConstraint extends AbstractVersionConstraint {
     public function complies(Version $version): bool {
-        return $this->asString() == $version->getVersionString();
+        return $this->asString() === $version->getVersionString();
     }
 }
