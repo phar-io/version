@@ -20,7 +20,7 @@ class VersionConstraintParser {
             return $this->handleOrGroup($value);
         }
 
-        if (!\preg_match('/^[\^~*]?[\d.*]+(?:-.*)?$/', $value)) {
+        if (!\preg_match('/^[\^~*]?v?[\d.*]+(?:-.*)?$/i', $value)) {
             throw new UnsupportedVersionConstraintException(
                 \sprintf('Version constraint %s is not supported.', $value)
             );
