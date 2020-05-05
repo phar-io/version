@@ -2,6 +2,19 @@
 
 All notable changes to phar-io/version are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [3.0.0] - 05.05.2020
+
+### Changed
+
+- Require PHP 7.2+
+- All code now uses strict mode
+- Scalar types have been added as needed
+
+### Added
+
+- The technically invalid format using 'v' prefix ("v1.2.3") is now properly supported 
+
+
 ## [2.0.1] - 08.07.2018
 
 ### Fixed
