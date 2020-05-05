@@ -24,6 +24,8 @@ class PreReleaseSuffix {
 
     /**
      * @param string $value
+     *
+     * @throws InvalidPreReleaseSuffixException
      */
     public function __construct($value) {
         $this->parseValue($value);
