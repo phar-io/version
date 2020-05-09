@@ -9,15 +9,11 @@ use PHPUnit\Framework\TestCase;
 class PreReleaseSuffixTest extends TestCase {
     /**
      * @dataProvider greaterThanProvider
-     *
-     * @param string $leftSuffixValue
-     * @param string $rightSuffixValue
-     * @param bool   $expectedResult
      */
     public function testGreaterThanReturnsExpectedResult(
-        $leftSuffixValue,
-        $rightSuffixValue,
-        $expectedResult
+        string $leftSuffixValue,
+        string $rightSuffixValue,
+        bool $expectedResult
     ): void {
         $leftSuffix  = new PreReleaseSuffix($leftSuffixValue);
         $rightSuffix = new PreReleaseSuffix($rightSuffixValue);
@@ -40,6 +36,32 @@ class PreReleaseSuffixTest extends TestCase {
             ['alpha1', 'alpha.2', false],
             ['alpha.3', 'alpha2', true],
             ['alpha.3', 'alpha.2', true],
+        ];
+    }
+
+    /**
+     * @dataProvider suffixProvider
+     */
+    public function testParsedValue(string $suffix) {
+        $prs = new PreReleaseSuffix($suffix);
+        $this->assertEquals($suffix, $prs->asString());
+    }
+
+    public function suffixProvider() {
+        return [
+            ['alpha1'],
+            ['beta1'],
+            ['b1'],
+            ['dev1'],
+            ['rc1'],
+            ['patch5'],
+
+            ['alpha.1'],
+            ['beta.1'],
+            ['b.1'],
+            ['dev.1'],
+            ['rc.1'],
+            ['patch.5']
         ];
     }
 }

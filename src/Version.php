@@ -22,16 +22,11 @@ class Version {
     /** @var PreReleaseSuffix */
     private $preReleaseSuffix;
 
-    /** @var string */
-    private $versionString = '';
-
     /**
      * @param string $versionString
      */
     public function __construct($versionString) {
         $this->ensureVersionStringIsValid($versionString);
-
-        $this->versionString = $versionString;
     }
 
     public function getPreReleaseSuffix(): PreReleaseSuffix {
@@ -39,7 +34,18 @@ class Version {
     }
 
     public function getVersionString(): string {
-        return $this->versionString;
+        $str = sprintf(
+            '%d.%d.%d',
+            $this->getMajor()->getValue(),
+            $this->getMinor()->getValue(),
+            $this->getPatch()->getValue()
+        );
+
+        if (!$this->hasPreReleaseSuffix()) {
+            return $str;
+        }
+
+        return $str . '-' . $this->getPreReleaseSuffix()->asString();
     }
 
     public function hasPreReleaseSuffix(): bool {
@@ -101,7 +107,7 @@ class Version {
     private function parseVersion(array $matches): void {
         $this->major = new VersionNumber((int)$matches['Major']);
         $this->minor = new VersionNumber((int)$matches['Minor']);
-        $this->patch = isset($matches['Patch']) ? new VersionNumber((int)$matches['Patch']) : new VersionNumber(null);
+        $this->patch = isset($matches['Patch']) ? new VersionNumber((int)$matches['Patch']) : new VersionNumber(0);
 
         if (isset($matches['PreReleaseSuffix'])) {
             $this->preReleaseSuffix = new PreReleaseSuffix($matches['PreReleaseSuffix']);

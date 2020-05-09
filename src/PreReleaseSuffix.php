@@ -2,7 +2,7 @@
 namespace PharIo\Version;
 
 class PreReleaseSuffix {
-    private $valueScoreMap = [
+    private const valueScoreMap = [
         'dev'   => 0,
         'a'     => 1,
         'alpha' => 1,
@@ -22,13 +22,18 @@ class PreReleaseSuffix {
     /** @var int */
     private $number = 0;
 
+    /** @var string  */
+    private $full;
+
     /**
-     * @param string $value
-     *
      * @throws InvalidPreReleaseSuffixException
      */
-    public function __construct($value) {
+    public function __construct(string $value) {
         $this->parseValue($value);
+    }
+
+    public function asString(): string {
+        return $this->full;
     }
 
     public function getValue(): string {
@@ -55,25 +60,27 @@ class PreReleaseSuffix {
      * @param $value
      */
     private function mapValueToScore($value): int {
-        if (\array_key_exists($value, $this->valueScoreMap)) {
-            return $this->valueScoreMap[$value];
+        if (\array_key_exists($value, self::valueScoreMap)) {
+            return self::valueScoreMap[$value];
         }
 
         return 0;
     }
 
     private function parseValue($value): void {
-        $regex = '/-?(dev|beta|b|rc|alpha|a|patch|p)\.?(\d*).*$/i';
+        $regex = '/-?((dev|beta|b|rc|alpha|a|patch|p)\.?(\d*)).*$/i';
 
         if (\preg_match($regex, $value, $matches) !== 1) {
             throw new InvalidPreReleaseSuffixException(\sprintf('Invalid label %s', $value));
         }
 
-        $this->value = $matches[1];
+        $this->full = $matches[1];
+        $this->value = $matches[2];
 
-        if (isset($matches[2])) {
-            $this->number = (int)$matches[2];
+        if ($matches[3] !== '') {
+            $this->number = (int)$matches[3];
         }
-        $this->valueScore = $this->mapValueToScore($this->value);
+
+        $this->valueScore = $this->mapValueToScore($matches[2]);
     }
 }
