@@ -19,7 +19,7 @@ class ExactVersionConstraintTest extends TestCase {
         return [
             ['1.0.2', new Version('1.0.2')],
             ['4.8.9', new Version('4.8.9')],
-            ['4.8', new Version('4.8')],
+            ['4.8.0', new Version('4.8')],
         ];
     }
 
