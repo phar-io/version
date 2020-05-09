@@ -2,6 +2,18 @@
 
 All notable changes to phar-io/version are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [3.0.1] - 09.05.2020
+
+### Changed
+
+- Internal Refactoring
+- More scalar types
+
+### Fixed
+
+- Fixed Constraint processing Regression for ^1.2  and ~1.2
+
+
 ## [3.0.0] - 05.05.2020
 
 ### Changed
