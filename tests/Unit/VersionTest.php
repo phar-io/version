@@ -47,7 +47,6 @@ class VersionTest extends TestCase {
             $this->assertSame($expectedReleaseCount, $version->getPreReleaseSuffix()->getNumber());
         }
 
-        $this->assertSame($versionString, $version->getVersionString());
     }
 
     public function versionProvider() {
@@ -56,8 +55,19 @@ class VersionTest extends TestCase {
             ['0.1.2', 0, 1, 2],
             ['1.0.0-alpha', 1, 0, 0, 'alpha'],
             ['3.4.12-dev3', 3, 4, 12, 'dev', 3],
+            ['1.2.3-beta.2', 1, 2, 3, 'beta', 2],
             ['v1.2.3-rc', 1, 2, 3, 'rc']
         ];
+    }
+
+    /**
+     * @dataProvider versionStringProvider
+     */
+    public function testAsStringReturnsExceptedVersionString(string $input, string $excepted) {
+        $this->assertEquals(
+            (new Version($input))->getVersionString(),
+            $excepted
+        );
     }
 
     /**
@@ -101,6 +111,25 @@ class VersionTest extends TestCase {
             ['foo'],
             ['0.0.1-dev+ABC', '0', '0', '1', 'dev', 'ABC'],
             ['1.0.0-x.7.z.92', '1', '0', '0', 'x.7.z.92']
+        ];
+    }
+
+    public function versionStringProvider() {
+        return [
+            ['0.0.1', '0.0.1'],
+            ['0.1.0', '0.1.0'],
+            ['1.0.0-alpha', '1.0.0-alpha'],
+            ['3.4.12-dev3', '3.4.12-dev3'],
+            ['1.2.3-beta.2', '1.2.3-beta.2'],
+
+            ['v0.0.1', '0.0.1'],
+            ['v0.1.0', '0.1.0'],
+            ['v1.0.0-alpha', '1.0.0-alpha'],
+            ['v3.4.12-dev3', '3.4.12-dev3'],
+            ['v1.2.3-beta.2', '1.2.3-beta.2'],
+
+            ['0.1', '0.1.0'],
+            ['v0.1', '0.1.0']
         ];
     }
 }
