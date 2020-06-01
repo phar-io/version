@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="version" default="setup">
+    <property name="phive.bin" value="phive"/>
+
     <target name="setup" depends="clean,install-tools,generate-autoloader"/>
 
     <target name="clean" unless="clean.done" description="Cleanup build artifacts">
