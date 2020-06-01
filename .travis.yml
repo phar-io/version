@@ -1,7 +1,17 @@
-os:
-- linux
-
 language: php
+
+cache:
+  directories:
+    - "$HOME/.phive"
+    - "$HOME/.phive/phars"
+    - "$HOME/.cache/composer"
+    - "$HOME/.composer/cache"
+    - "$HOME/.gnupg"
+
+addons:
+  apt:
+    packages:
+      - ant
 
 before_install:
   - mkdir -p "$HOME/bin"
@@ -25,7 +35,7 @@ php:
   - 7.4snapshot
   - master
 
-matrix:
+jobs:
   allow_failures:
     - php: master
   fast_finish: true
