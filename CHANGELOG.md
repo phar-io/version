@@ -2,6 +2,10 @@
 
 All notable changes to phar-io/version are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [3.0.2] - 27.06.2020
+
+This release now supports PHP 7.2+ and PHP ^8.0. No other changes included.
+
 ## [3.0.1] - 09.05.2020
 
 ### Changed
@@ -32,7 +36,7 @@ All notable changes to phar-io/version are documented in this file using the [Ke
 ### Fixed
 
 - Versions without a pre-release suffix are now always considered greater 
-than versions without a pre-release suffix. Example: `3.0.0 > 3.0.0-alpha.1`  
+than versions with a pre-release suffix. Example: `3.0.0 > 3.0.0-alpha.1`  
 
 ## [2.0.0] - 23.06.2018
 
