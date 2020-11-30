@@ -132,4 +132,19 @@ class VersionTest extends TestCase {
             ['v0.1', '0.1.0']
         ];
     }
+
+    public function testIdenticalVersionsAreConsideredEqual() {
+        $a = new Version('1.0.0-rc1');
+        $b = new Version('1.0.0-rc1');
+
+        $this->assertTrue($a->equals($b));
+    }
+
+    public function testNonIdenticalVersionsAreNotConsideredEqual() {
+        $a = new Version('1.0.0-rc1');
+        $b = new Version('1.0.0-rc2');
+
+        $this->assertFalse($a->equals($b));
+    }
+
 }
