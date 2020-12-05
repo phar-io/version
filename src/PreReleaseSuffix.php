@@ -60,6 +60,8 @@ class PreReleaseSuffix {
      * @param $value
      */
     private function mapValueToScore($value): int {
+        $value = strtolower($value);
+        
         if (\array_key_exists($value, self::valueScoreMap)) {
             return self::valueScoreMap[$value];
         }
