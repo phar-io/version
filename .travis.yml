@@ -37,6 +37,8 @@ php:
   - 7.2snapshot
   - 7.3snapshot
   - 7.4snapshot
+  - 8.0
+  - 8.0snapshot
   - master
 
 jobs:
