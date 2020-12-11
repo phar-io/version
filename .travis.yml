@@ -24,6 +24,7 @@ before_install:
   - if [ ! -d "$HOME/.phive" ]; then mkdir "$HOME/.phive"; fi
   - if [ ! -f "$HOME/.phive/phive.phar" ]; then ant getphive; mv phive.phar "$HOME/.phive/"; fi
   - install --mode=0755 -T "$HOME/.phive/phive.phar" "$HOME/bin/phive"
+  - $HOME/bin/phive self-update
 
 install:
   - ant setup
