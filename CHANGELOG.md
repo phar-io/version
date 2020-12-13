@@ -2,6 +2,13 @@
 
 All notable changes to phar-io/version are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [3.0.4] - 14.12.2020
+
+### Fixed 
+
+- [#22](https://github.com/phar-io/version/pull/22): make dev suffix rank works for uppercase too
+
+
 ## [3.0.3] - 30.11.2020
 
 ### Added
@@ -75,5 +82,11 @@ Changes to public API:
 - [#10](https://github.com/phar-io/version/issues/10): Version numbers containing 
 a numeric suffix as seen in Debian packages are now supported.  
 
+
+[3.0.4]: https://github.com/phar-io/version/compare/3.0.3...3.0.4
+[3.0.3]: https://github.com/phar-io/version/compare/3.0.2...3.0.3
+[3.0.2]: https://github.com/phar-io/version/compare/3.0.1...3.0.2
+[3.0.1]: https://github.com/phar-io/version/compare/3.0.0...3.0.1
+[3.0.0]: https://github.com/phar-io/version/compare/2.0.1...3.0.0
 [2.0.1]: https://github.com/phar-io/version/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/phar-io/version/compare/1.0.1...2.0.0
