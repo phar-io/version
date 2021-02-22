@@ -10,6 +10,9 @@
 namespace PharIo\Version;
 
 class Version {
+    /** @var string */
+    private $originalVersionString;
+
     /** @var VersionNumber */
     private $major;
 
@@ -27,10 +30,15 @@ class Version {
      */
     public function __construct($versionString) {
         $this->ensureVersionStringIsValid($versionString);
+        $this->originalVersionString = $versionString;
     }
 
     public function getPreReleaseSuffix(): PreReleaseSuffix {
         return $this->preReleaseSuffix;
+    }
+
+    public function getOriginalString(): string {
+        return $this->originalVersionString;
     }
 
     public function getVersionString(): string {

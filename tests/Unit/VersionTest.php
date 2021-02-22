@@ -63,6 +63,16 @@ class VersionTest extends TestCase {
     /**
      * @dataProvider versionStringProvider
      */
+    public function testOrigionalStringReturnsExceptedVersionString(string $input) {
+        $this->assertEquals(
+            (new Version($input))->getOriginalString(),
+            $input
+        );
+    }
+
+    /**
+     * @dataProvider versionStringProvider
+     */
     public function testAsStringReturnsExceptedVersionString(string $input, string $excepted) {
         $this->assertEquals(
             (new Version($input))->getVersionString(),
