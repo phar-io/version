@@ -2,12 +2,17 @@
 
 All notable changes to phar-io/version are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [3.0.5] - Unreleased
+
+### Added
+
+- [#24](https://github.com/phar-io/version/issues/24): `Version::getOriginalString()` added
+
 ## [3.0.4] - 14.12.2020
 
 ### Fixed 
 
 - [#22](https://github.com/phar-io/version/pull/22): make dev suffix rank works for uppercase too
-
 
 ## [3.0.3] - 30.11.2020
 
@@ -25,6 +30,7 @@ This release now supports PHP 7.2+ and PHP ^8.0. No other changes included.
 
 - Internal Refactoring
 - More scalar types
+- `Version::getVersionString()` will no longer return `v` prefixes for any versions
 
 ### Fixed
 
