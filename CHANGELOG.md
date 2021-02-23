@@ -4,11 +4,10 @@ All notable changes to phar-io/version are documented in this file using the [Ke
 
 ## [3.1.0] - 2021-02-23
 
-### Changed
+>### Changed
 
 - Internal Refactoring
 - More scalar types
-
 
 ### Added
 
