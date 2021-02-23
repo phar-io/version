@@ -42,7 +42,7 @@ class Version {
     }
 
     public function getVersionString(): string {
-        $str = sprintf(
+        $str = \sprintf(
             '%d.%d.%d',
             $this->getMajor()->getValue(),
             $this->getMinor()->getValue(),

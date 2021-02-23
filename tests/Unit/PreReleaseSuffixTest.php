@@ -42,7 +42,7 @@ class PreReleaseSuffixTest extends TestCase {
     /**
      * @dataProvider suffixProvider
      */
-    public function testParsedValue(string $suffix) {
+    public function testParsedValue(string $suffix): void {
         $prs = new PreReleaseSuffix($suffix);
         $this->assertEquals($suffix, $prs->asString());
     }

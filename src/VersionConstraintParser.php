@@ -75,7 +75,7 @@ class VersionConstraintParser {
         $constraints = [
             new GreaterThanOrEqualToVersionConstraint(
                 $value,
-                new Version(substr($value, 1))
+                new Version(\substr($value, 1))
             ),
             new SpecificMajorAndMinorVersionConstraint(
                 $value,
@@ -103,7 +103,6 @@ class VersionConstraintParser {
         } else {
             $constraints[] = new SpecificMajorVersionConstraint($value, $constraintValue->getMajor()->getValue());
         }
-
 
         return new AndVersionConstraintGroup(
             $value,

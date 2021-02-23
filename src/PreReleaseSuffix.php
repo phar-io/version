@@ -22,7 +22,7 @@ class PreReleaseSuffix {
     /** @var int */
     private $number = 0;
 
-    /** @var string  */
+    /** @var string */
     private $full;
 
     /**
@@ -60,8 +60,8 @@ class PreReleaseSuffix {
      * @param $value
      */
     private function mapValueToScore($value): int {
-        $value = strtolower($value);
-        
+        $value = \strtolower($value);
+
         if (\array_key_exists($value, self::valueScoreMap)) {
             return self::valueScoreMap[$value];
         }
@@ -76,7 +76,7 @@ class PreReleaseSuffix {
             throw new InvalidPreReleaseSuffixException(\sprintf('Invalid label %s', $value));
         }
 
-        $this->full = $matches[1];
+        $this->full  = $matches[1];
         $this->value = $matches[2];
 
         if ($matches[3] !== '') {

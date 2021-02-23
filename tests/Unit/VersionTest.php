@@ -46,7 +46,6 @@ class VersionTest extends TestCase {
         if ($expectedReleaseCount !== 0) {
             $this->assertSame($expectedReleaseCount, $version->getPreReleaseSuffix()->getNumber());
         }
-
     }
 
     public function versionProvider() {
@@ -63,7 +62,7 @@ class VersionTest extends TestCase {
     /**
      * @dataProvider versionStringProvider
      */
-    public function testOrigionalStringReturnsExceptedVersionString(string $input) {
+    public function testOrigionalStringReturnsExceptedVersionString(string $input): void {
         $this->assertEquals(
             (new Version($input))->getOriginalString(),
             $input
@@ -73,7 +72,7 @@ class VersionTest extends TestCase {
     /**
      * @dataProvider versionStringProvider
      */
-    public function testAsStringReturnsExceptedVersionString(string $input, string $excepted) {
+    public function testAsStringReturnsExceptedVersionString(string $input, string $excepted): void {
         $this->assertEquals(
             (new Version($input))->getVersionString(),
             $excepted
@@ -143,18 +142,17 @@ class VersionTest extends TestCase {
         ];
     }
 
-    public function testIdenticalVersionsAreConsideredEqual() {
+    public function testIdenticalVersionsAreConsideredEqual(): void {
         $a = new Version('1.0.0-rc1');
         $b = new Version('1.0.0-rc1');
 
         $this->assertTrue($a->equals($b));
     }
 
-    public function testNonIdenticalVersionsAreNotConsideredEqual() {
+    public function testNonIdenticalVersionsAreNotConsideredEqual(): void {
         $a = new Version('1.0.0-rc1');
         $b = new Version('1.0.0-rc2');
 
         $this->assertFalse($a->equals($b));
     }
-
 }
