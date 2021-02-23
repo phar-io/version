@@ -48,7 +48,7 @@ class VersionConstraintParserTest extends TestCase {
                     '~4.6',
                     [
                         new GreaterThanOrEqualToVersionConstraint('~4.6', new Version('4.6')),
-                        new SpecificMajorAndMinorVersionConstraint('~4.6', 4, 6)
+                        new SpecificMajorVersionConstraint('~4.6', 4)
                     ]
                 )
             ],

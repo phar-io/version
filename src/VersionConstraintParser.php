@@ -66,35 +66,35 @@ class VersionConstraintParser {
     }
 
     private function handleTildeOperator(string $value): AndVersionConstraintGroup {
-        $version     = new Version(\substr($value, 1));
-        $constraints = [
-            new GreaterThanOrEqualToVersionConstraint($value, $version)
-        ];
+        $constraintValue = new VersionConstraintValue(\substr($value, 1));
 
-        if ($version->getPatch()->isAny()) {
-            $constraints[] = new SpecificMajorVersionConstraint(
-                $value,
-                $version->getMajor()->getValue()
-            );
-        } else {
-            $constraints[] = new SpecificMajorAndMinorVersionConstraint(
-                $value,
-                $version->getMajor()->getValue(),
-                $version->getMinor()->getValue()
-            );
+        if ($constraintValue->getPatch()->isAny()) {
+            return $this->handleCaretOperator($value);
         }
+
+        $constraints = [
+            new GreaterThanOrEqualToVersionConstraint(
+                $value,
+                new Version(substr($value, 1))
+            ),
+            new SpecificMajorAndMinorVersionConstraint(
+                $value,
+                $constraintValue->getMajor()->getValue(),
+                $constraintValue->getMinor()->getValue()
+            )
+        ];
 
         return new AndVersionConstraintGroup($value, $constraints);
     }
 
     private function handleCaretOperator(string $value): AndVersionConstraintGroup {
-        $version = new Version(\substr($value, 1));
+        $constraintValue = new VersionConstraintValue(\substr($value, 1));
 
         return new AndVersionConstraintGroup(
             $value,
             [
-                new GreaterThanOrEqualToVersionConstraint($value, $version),
-                new SpecificMajorVersionConstraint($value, $version->getMajor()->getValue())
+                new GreaterThanOrEqualToVersionConstraint($value, new Version(\substr($value, 1))),
+                new SpecificMajorVersionConstraint($value, $constraintValue->getMajor()->getValue())
             ]
         );
     }
