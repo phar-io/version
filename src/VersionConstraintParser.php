@@ -90,12 +90,24 @@ class VersionConstraintParser {
     private function handleCaretOperator(string $value): AndVersionConstraintGroup {
         $constraintValue = new VersionConstraintValue(\substr($value, 1));
 
+        $constraints = [
+            new GreaterThanOrEqualToVersionConstraint($value, new Version(\substr($value, 1)))
+        ];
+
+        if ($constraintValue->getMajor()->getValue() === 0) {
+            $constraints[] = new SpecificMajorAndMinorVersionConstraint(
+                $value,
+                $constraintValue->getMajor()->getValue(),
+                $constraintValue->getMinor()->getValue()
+            );
+        } else {
+            $constraints[] = new SpecificMajorVersionConstraint($value, $constraintValue->getMajor()->getValue());
+        }
+
+
         return new AndVersionConstraintGroup(
             $value,
-            [
-                new GreaterThanOrEqualToVersionConstraint($value, new Version(\substr($value, 1))),
-                new SpecificMajorVersionConstraint($value, $constraintValue->getMajor()->getValue())
-            ]
+            $constraints
         );
     }
 }
