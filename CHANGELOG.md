@@ -2,11 +2,25 @@
 
 All notable changes to phar-io/version are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [3.1.0] - Unreleased
+## [3.1.0] - 2021-02-23
+
+### Changed
+
+- Internal Refactoring
+- More scalar types
+
 
 ### Added
 
-- [#24](https://github.com/phar-io/version/issues/24): `Version::getOriginalString()` added
+- [#24](https://github.com/phar-io/version/issues/24): `Version::getOriginalString()` added (Thanks @addshore)
+- Version constraints using the caret operator (`^`) now honor pre-1.0 releases, e.g. `^0.3` translates to `0.3.*`)
+- Various integration tests for version constraint processing
+
+### Fixed
+
+- [#23](https://github.com/phar-io/version/pull/23): Tilde operator without patch level
+
+
 
 ## [3.0.4] - 14.12.2020
 
@@ -20,6 +34,7 @@ All notable changes to phar-io/version are documented in this file using the [Ke
 
 - Comparator method `Version::equals()` added
 
+
 ## [3.0.2] - 27.06.2020
 
 This release now supports PHP 7.2+ and PHP ^8.0. No other changes included.
@@ -28,10 +43,11 @@ This release now supports PHP 7.2+ and PHP ^8.0. No other changes included.
 ## [3.0.1] - 09.05.2020
 
 __Potential BC Break Notice:__
-`Version::getVersionString()` no longer returns `v` prefixes as these are not
-part of the semver specs (see https://semver.org/#is-v123-a-semantic-version).
-As of Version 3.0.5 `Version::getOriginalString()` can be used to still
-retrieve it.
+`Version::getVersionString()` no longer returns `v` prefixes in case the "input"
+string contained one. These are not part of the semver specs
+(see https://semver.org/#is-v123-a-semantic-version) and get stripped out.
+As of Version 3.1.0 `Version::getOriginalString()` can be used to still
+retrieve it as given.
 
 ### Changed
 
