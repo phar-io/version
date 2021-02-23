@@ -7,6 +7,9 @@
 
     <projectFiles>
         <directory name="src" />
+        <ignoreFiles>
+            <file name="src/autoload.php" />
+        </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>

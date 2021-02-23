@@ -40,15 +40,15 @@ class VersionConstraintParser {
         if ($constraint->getMinor()->isAny()) {
             return new SpecificMajorVersionConstraint(
                 $constraint->getVersionString(),
-                $constraint->getMajor()->getValue()
+                $constraint->getMajor()->getValue() ?? 0
             );
         }
 
         if ($constraint->getPatch()->isAny()) {
             return new SpecificMajorAndMinorVersionConstraint(
                 $constraint->getVersionString(),
-                $constraint->getMajor()->getValue(),
-                $constraint->getMinor()->getValue()
+                $constraint->getMajor()->getValue() ?? 0,
+                $constraint->getMinor()->getValue() ?? 0
             );
         }
 
@@ -79,8 +79,8 @@ class VersionConstraintParser {
             ),
             new SpecificMajorAndMinorVersionConstraint(
                 $value,
-                $constraintValue->getMajor()->getValue(),
-                $constraintValue->getMinor()->getValue()
+                $constraintValue->getMajor()->getValue() ?? 0,
+                $constraintValue->getMinor()->getValue() ?? 0
             )
         ];
 
@@ -97,11 +97,14 @@ class VersionConstraintParser {
         if ($constraintValue->getMajor()->getValue() === 0) {
             $constraints[] = new SpecificMajorAndMinorVersionConstraint(
                 $value,
-                $constraintValue->getMajor()->getValue(),
-                $constraintValue->getMinor()->getValue()
+                $constraintValue->getMajor()->getValue() ?? 0,
+                $constraintValue->getMinor()->getValue() ?? 0
             );
         } else {
-            $constraints[] = new SpecificMajorVersionConstraint($value, $constraintValue->getMajor()->getValue());
+            $constraints[] = new SpecificMajorVersionConstraint(
+                $value,
+                $constraintValue->getMajor()->getValue() ?? 0
+            );
         }
 
         return new AndVersionConstraintGroup(

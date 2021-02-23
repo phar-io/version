@@ -56,10 +56,7 @@ class PreReleaseSuffix {
         return $this->getNumber() > $suffix->getNumber();
     }
 
-    /**
-     * @param $value
-     */
-    private function mapValueToScore($value): int {
+    private function mapValueToScore(string $value): int {
         $value = \strtolower($value);
 
         if (\array_key_exists($value, self::valueScoreMap)) {
@@ -69,7 +66,7 @@ class PreReleaseSuffix {
         return 0;
     }
 
-    private function parseValue($value): void {
+    private function parseValue(string $value): void {
         $regex = '/-?((dev|beta|b|rc|alpha|a|patch|p)\.?(\d*)).*$/i';
 
         if (\preg_match($regex, $value, $matches) !== 1) {

@@ -22,18 +22,19 @@ class Version {
     /** @var VersionNumber */
     private $patch;
 
-    /** @var PreReleaseSuffix */
+    /** @var null|PreReleaseSuffix */
     private $preReleaseSuffix;
 
-    /**
-     * @param string $versionString
-     */
-    public function __construct($versionString) {
+    public function __construct(string $versionString) {
         $this->ensureVersionStringIsValid($versionString);
         $this->originalVersionString = $versionString;
     }
 
     public function getPreReleaseSuffix(): PreReleaseSuffix {
+        if ($this->preReleaseSuffix === null) {
+            throw new NoPreReleaseSuffixException('No pre-release suffix set');
+        }
+
         return $this->preReleaseSuffix;
     }
 
@@ -44,9 +45,9 @@ class Version {
     public function getVersionString(): string {
         $str = \sprintf(
             '%d.%d.%d',
-            $this->getMajor()->getValue(),
-            $this->getMinor()->getValue(),
-            $this->getPatch()->getValue()
+            $this->getMajor()->getValue() ?? 0,
+            $this->getMinor()->getValue() ?? 0,
+            $this->getPatch()->getValue() ?? 0
         );
 
         if (!$this->hasPreReleaseSuffix()) {
@@ -116,6 +117,11 @@ class Version {
         return $this->patch;
     }
 
+    /**
+     * @param string[] $matches
+     *
+     * @throws InvalidPreReleaseSuffixException
+     */
     private function parseVersion(array $matches): void {
         $this->major = new VersionNumber((int)$matches['Major']);
         $this->minor = new VersionNumber((int)$matches['Minor']);

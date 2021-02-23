@@ -20,10 +20,7 @@ class VersionConstraintValue {
     /** @var string */
     private $versionString = '';
 
-    /**
-     * @param string $versionString
-     */
-    public function __construct($versionString) {
+    public function __construct(string $versionString) {
         $this->versionString = $versionString;
 
         $this->parseVersion($versionString);
@@ -53,10 +50,7 @@ class VersionConstraintValue {
         return $this->patch;
     }
 
-    /**
-     * @param $versionString
-     */
-    private function parseVersion($versionString): void {
+    private function parseVersion(string $versionString): void {
         $this->extractBuildMetaData($versionString);
         $this->extractLabel($versionString);
         $this->stripPotentialVPrefix($versionString);
@@ -71,27 +65,21 @@ class VersionConstraintValue {
         $this->patch = new VersionNumber($patchValue);
     }
 
-    /**
-     * @param string $versionString
-     */
-    private function extractBuildMetaData(&$versionString): void {
+    private function extractBuildMetaData(string &$versionString): void {
         if (\preg_match('/\+(.*)/', $versionString, $matches) === 1) {
             $this->buildMetaData = $matches[1];
             $versionString       = \str_replace($matches[0], '', $versionString);
         }
     }
 
-    /**
-     * @param string $versionString
-     */
-    private function extractLabel(&$versionString): void {
+    private function extractLabel(string &$versionString): void {
         if (\preg_match('/-(.*)/', $versionString, $matches) === 1) {
             $this->label   = $matches[1];
             $versionString = \str_replace($matches[0], '', $versionString);
         }
     }
 
-    private function stripPotentialVPrefix(&$versionString): void {
+    private function stripPotentialVPrefix(string &$versionString): void {
         if ($versionString[0] !== 'v') {
             return;
         }
