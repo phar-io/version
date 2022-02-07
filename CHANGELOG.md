@@ -2,9 +2,16 @@
 
 All notable changes to phar-io/version are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [3.1.1] - 2022-02-07
+
+### Fixed
+
+- [#28](https://github.com/phar-io/version/issues/28): `VersionConstraintParser` does not support logical OR represented by single pipe (|) (Thanks @llaville)
+
+
 ## [3.1.0] - 2021-02-23
 
->### Changed
+### Changed
 
 - Internal Refactoring
 - More scalar types
