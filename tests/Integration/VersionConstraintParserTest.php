@@ -107,6 +107,35 @@ class VersionConstraintParserTest extends TestCase {
                     ]
                 )
             ],
+            [
+                '^5.3.2 | ^7.0 || ^8.0',
+                new OrVersionConstraintGroup(
+                    '^5.3.2 | ^7.0 || ^8.0',
+                    [
+                        new AndVersionConstraintGroup(
+                            '^5.3.2',
+                            [
+                                new GreaterThanOrEqualToVersionConstraint('^5.3.2', new Version('5.3.2')),
+                                new SpecificMajorVersionConstraint('^5.3.2', 5)
+                            ]
+                        ),
+                        new AndVersionConstraintGroup(
+                            '^7.0',
+                            [
+                                new GreaterThanOrEqualToVersionConstraint('^7.0', new Version('7.0')),
+                                new SpecificMajorVersionConstraint('^7.0', 7)
+                            ]
+                        ),
+                        new AndVersionConstraintGroup(
+                            '^8.0',
+                            [
+                                new GreaterThanOrEqualToVersionConstraint('^8.0', new Version('8.0')),
+                                new SpecificMajorVersionConstraint('^8.0', 8)
+                            ]
+                        )
+                    ]
+                )
+            ],
             ['7.0.28-1', new ExactVersionConstraint('7.0.28-1')],
             [
                 '^3.0.0-alpha1',
