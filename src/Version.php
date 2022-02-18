@@ -25,11 +25,17 @@ class Version {
     /** @var null|PreReleaseSuffix */
     private $preReleaseSuffix;
 
+    /** @var null|BuildMetaData */
+    private $buildMetadata;
+
     public function __construct(string $versionString) {
         $this->ensureVersionStringIsValid($versionString);
         $this->originalVersionString = $versionString;
     }
 
+    /**
+     * @throws NoPreReleaseSuffixException
+     */
     public function getPreReleaseSuffix(): PreReleaseSuffix {
         if ($this->preReleaseSuffix === null) {
             throw new NoPreReleaseSuffixException('No pre-release suffix set');
@@ -117,6 +123,21 @@ class Version {
         return $this->patch;
     }
 
+    public function hasBuildMetaData(): bool {
+        return $this->buildMetadata !== null;
+    }
+
+    /**
+     * @throws NoBuildMetaDataException
+     */
+    public function getBuildMetaData(): BuildMetaData {
+        if (!$this->hasBuildMetaData()) {
+            throw new NoBuildMetaDataException('No build metadata set');
+        }
+
+        return $this->buildMetadata;
+    }
+
     /**
      * @param string[] $matches
      *
@@ -127,8 +148,12 @@ class Version {
         $this->minor = new VersionNumber((int)$matches['Minor']);
         $this->patch = isset($matches['Patch']) ? new VersionNumber((int)$matches['Patch']) : new VersionNumber(0);
 
-        if (isset($matches['PreReleaseSuffix'])) {
+        if (isset($matches['PreReleaseSuffix']) && $matches['PreReleaseSuffix'] !== '') {
             $this->preReleaseSuffix = new PreReleaseSuffix($matches['PreReleaseSuffix']);
+        }
+
+        if (isset($matches['BuildMetadata'])) {
+            $this->buildMetadata = new BuildMetaData($matches['BuildMetadata']);
         }
     }
 
@@ -139,16 +164,20 @@ class Version {
      */
     private function ensureVersionStringIsValid($version): void {
         $regex = '/^v?
-            (?<Major>(0|(?:[1-9]\d*)))
+            (?P<Major>0|[1-9]\d*)
             \\.
-            (?<Minor>(0|(?:[1-9]\d*)))
+            (?P<Minor>0|[1-9]\d*)
             (\\.
-                (?<Patch>(0|(?:[1-9]\d*)))
+                (?P<Patch>0|[1-9]\d*)
             )?
             (?:
                 -
-                (?<PreReleaseSuffix>(?:(dev|beta|b|rc|alpha|a|patch|p)\.?\d*))
-            )?       
+                (?<PreReleaseSuffix>(?:(dev|beta|b|rc|alpha|a|patch|p|pl)\.?\d*))
+            )?
+            (?:
+                \\+
+                (?P<BuildMetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*)
+            )?
         $/xi';
 
         if (\preg_match($regex, $version, $matches) !== 1) {

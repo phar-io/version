@@ -24,6 +24,7 @@ class VersionTest extends TestCase {
      * @param string $expectedPatch
      * @param string $expectedPreReleaseValue
      * @param int    $expectedReleaseCount
+     * @param string $metaData
      */
     public function testParsesVersionNumbers(
         $versionString,
@@ -31,7 +32,8 @@ class VersionTest extends TestCase {
         $expectedMinor,
         $expectedPatch,
         $expectedPreReleaseValue = '',
-        $expectedReleaseCount = 0
+        $expectedReleaseCount = 0,
+        $metaData = ''
     ): void {
         $version = new Version($versionString);
 
@@ -46,6 +48,10 @@ class VersionTest extends TestCase {
         if ($expectedReleaseCount !== 0) {
             $this->assertSame($expectedReleaseCount, $version->getPreReleaseSuffix()->getNumber());
         }
+
+        if ($metaData !== '') {
+            $this->assertSame($metaData, $version->getBuildMetaData()->asString());
+        }
     }
 
     public function versionProvider() {
@@ -55,7 +61,10 @@ class VersionTest extends TestCase {
             ['1.0.0-alpha', 1, 0, 0, 'alpha'],
             ['3.4.12-dev3', 3, 4, 12, 'dev', 3],
             ['1.2.3-beta.2', 1, 2, 3, 'beta', 2],
-            ['v1.2.3-rc', 1, 2, 3, 'rc']
+            ['v1.2.3-rc', 1, 2, 3, 'rc'],
+            ['v1.2.3-rc1', 1, 2, 3, 'rc', 1],
+            ['0.0.1-dev+ABC', 0, 0, 1, 'dev', 0, 'ABC'],
+            ['0.0.1+git-15a90844ad40f127afd244c0cad228de2a80052a', 0, 0, 1, '', 0, 'git-15a90844ad40f127afd244c0cad228de2a80052a']
         ];
     }
 
@@ -118,8 +127,8 @@ class VersionTest extends TestCase {
     public function invalidVersionStringProvider(): array {
         return [
             ['foo'],
-            ['0.0.1-dev+ABC', '0', '0', '1', 'dev', 'ABC'],
-            ['1.0.0-x.7.z.92', '1', '0', '0', 'x.7.z.92']
+            ['1.2.3.4'],
+            ['1.0.0-x.7.z.92']
         ];
     }
 
@@ -155,4 +164,24 @@ class VersionTest extends TestCase {
 
         $this->assertFalse($a->equals($b));
     }
+
+
+    public function testGetPreReleaseSuffixThrowsExceptionWhenNoneIsSet(): void {
+        $this->expectException(NoPreReleaseSuffixException::class);
+        (new Version('1.2.3'))->getPreReleaseSuffix();
+    }
+
+    public function testGetBuildMetadataThrowsExceptionWhenNoneIsSet(): void {
+        $this->expectException(NoBuildMetaDataException::class);
+        (new Version('1.2.3'))->getBuildMetaData();
+    }
+
+    public function testHasBuildMetadataReturnsFalseWhenNoneIsSet(): void {
+        $this->assertFalse((new Version('1.2.3'))->hasBuildMetaData());
+    }
+
+    public function testBuildMetadataCanBeRetreived(): void {
+        $this->assertSame('test', (new Version('1.2.3+test'))->getBuildMetaData()->asString());
+    }
+
 }
