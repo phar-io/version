@@ -64,4 +64,13 @@ class PreReleaseSuffixTest extends TestCase {
             ['patch.5']
         ];
     }
+
+    public function testLabelCanBeRetrieved(): void {
+        $this->assertSame('rc', (new PreReleaseSuffix('rc1'))->getValue());
+    }
+
+    public function testCreatingWithUnsupportedLabelTypeThrowsException(): void {
+        $this->expectException(InvalidPreReleaseSuffixException::class);
+        (new PreReleaseSuffix('foo'));
+    }
 }
