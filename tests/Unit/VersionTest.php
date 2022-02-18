@@ -165,7 +165,6 @@ class VersionTest extends TestCase {
         $this->assertFalse($a->equals($b));
     }
 
-
     public function testGetPreReleaseSuffixThrowsExceptionWhenNoneIsSet(): void {
         $this->expectException(NoPreReleaseSuffixException::class);
         (new Version('1.2.3'))->getPreReleaseSuffix();
@@ -183,5 +182,4 @@ class VersionTest extends TestCase {
     public function testBuildMetadataCanBeRetreived(): void {
         $this->assertSame('test', (new Version('1.2.3+test'))->getBuildMetaData()->asString());
     }
-
 }

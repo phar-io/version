@@ -15,7 +15,6 @@ use PHPUnit\Framework\TestCase;
  * @covers \PharIo\Version\BuildMetaData
  */
 class BuildMetaDataTest extends TestCase {
-
     public function testCanBeCreated(): void {
         $this->assertInstanceOf(BuildMetaData::class, new BuildMetaData('some'));
     }

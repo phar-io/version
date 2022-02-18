@@ -21,5 +21,4 @@ class BuildMetaData {
     public function asString(): string {
         return $this->value;
     }
-
 }
