@@ -2,6 +2,12 @@
 
 All notable changes to phar-io/version are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## UPCOMING
+
+### Added
+
+- Add support for build metadata
+
 ## [3.1.1] - 2022-02-07
 
 ### Fixed
