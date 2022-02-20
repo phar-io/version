@@ -22,4 +22,18 @@ class BuildMetaDataTest extends TestCase {
     public function testSetValueCanBeRetrieved(): void {
         $this->assertSame('some', (new BuildMetaData('some'))->asString());
     }
+
+    public function testTwoIdenticalMetadataStringsAreConsideredEqual(): void {
+        $a = new BuildMetaData('foo');
+        $b = new BuildMetaData('foo');
+
+        $this->assertTrue($a->equals($b));
+    }
+
+    public function testTwoNonIdenticalMetadataStringsAreNotConsideredEqual(): void {
+        $a = new BuildMetaData('abc');
+        $b = new BuildMetaData('def');
+
+        $this->assertFalse($a->equals($b));
+    }
 }
