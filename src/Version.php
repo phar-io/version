@@ -68,7 +68,20 @@ class Version {
     }
 
     public function equals(Version $other): bool {
-        return $this->getVersionString() === $other->getVersionString();
+        if ($this->getVersionString() !== $other->getVersionString()) {
+            return false;
+        }
+
+        if ($this->hasBuildMetaData() !== $other->hasBuildMetaData()) {
+            return false;
+        }
+
+        if ($this->hasBuildMetaData() && $other->hasBuildMetaData() &&
+            !$this->getBuildMetaData()->equals($other->getBuildMetaData())) {
+            return false;
+        }
+
+        return true;
     }
 
     public function isGreaterThan(Version $version): bool {
@@ -176,7 +189,7 @@ class Version {
             )?
             (?:
                 \\+
-                (?P<BuildMetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*)
+                (?P<BuildMetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-@]+)*)
             )?
         $/xi';
 

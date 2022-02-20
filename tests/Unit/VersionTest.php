@@ -165,6 +165,27 @@ class VersionTest extends TestCase {
         $this->assertFalse($a->equals($b));
     }
 
+    public function testIdenticalVersionsWithBuildMetaDataAreConsideredEqual(): void {
+        $a = new Version('1.0.0-rc1+abc');
+        $b = new Version('1.0.0-rc1+abc');
+
+        $this->assertTrue($a->equals($b));
+    }
+
+    public function testIdenticalVersionsWithOnlyOneHavingBuildMetaDataAreNotConsideredEqual(): void {
+        $a = new Version('1.0.0-rc1+abc');
+        $b = new Version('1.0.0-rc1');
+
+        $this->assertFalse($a->equals($b));
+    }
+
+    public function testIdenticalVersionsWithDifferingBuildMetaDataAreNotConsideredEqual(): void {
+        $a = new Version('1.0.0-rc1+abc');
+        $b = new Version('1.0.0-rc1+def');
+
+        $this->assertFalse($a->equals($b));
+    }
+
     public function testGetPreReleaseSuffixThrowsExceptionWhenNoneIsSet(): void {
         $this->expectException(NoPreReleaseSuffixException::class);
         (new Version('1.2.3'))->getPreReleaseSuffix();
