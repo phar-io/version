@@ -136,6 +136,10 @@ class Version {
         return $this->patch;
     }
 
+    /**
+     * @psalm-assert-if-true BuildMetaData $this->buildMetadata
+     * @psalm-assert-if-true BuildMetaData $this->getBuildMetaData()
+     */
     public function hasBuildMetaData(): bool {
         return $this->buildMetadata !== null;
     }
