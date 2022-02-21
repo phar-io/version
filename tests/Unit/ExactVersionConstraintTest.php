@@ -20,6 +20,8 @@ class ExactVersionConstraintTest extends TestCase {
             ['1.0.2', new Version('1.0.2')],
             ['4.8.9', new Version('4.8.9')],
             ['4.8.0', new Version('4.8')],
+            ['1.2.3-dev', new Version('1.2.3-dev')],
+            ['1.2.3+abc', new Version('1.2.3+abc')]
         ];
     }
 
@@ -28,6 +30,7 @@ class ExactVersionConstraintTest extends TestCase {
             ['1.0.2', new Version('1.0.3')],
             ['4.8.9', new Version('4.7.9')],
             ['4.8', new Version('4.8.5')],
+            ['1.2.3+abc', new Version('1.2.3+def')]
         ];
     }
 
