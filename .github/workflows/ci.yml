@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         php-version:
-          - "8.1"
+          - "8.0"
 
     steps:
       - name: "Checkout"
@@ -27,9 +27,6 @@ jobs:
           coverage: "none"
           php-version: "${{ matrix.php-version }}"
           tools: "phive"
-
-      - name: "Install dependencies with composer"
-        run: "composer install --no-interaction --optimize-autoloader --prefer-dist"
 
       - name: "Install dependencies with phive"
         env:
@@ -48,9 +45,10 @@ jobs:
     runs-on: "ubuntu-latest"
 
     strategy:
+      fail-fast: false
+
       matrix:
         php-version:
-          - "7.2"
           - "7.3"
           - "7.4"
           - "8.0"
@@ -72,16 +70,13 @@ jobs:
           php-version: "${{ matrix.php-version }}"
           tools: "phive"
 
-      - name: "Install dependencies with composer"
-        run: "composer install --no-interaction --optimize-autoloader --prefer-dist"
-
       - name: "Install dependencies with phive"
         env:
           GITHUB_AUTH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: "ant install-tools"
 
-      - name: "Run PHPUnit"
-        run: "tools/phpunit --coverage-clover build/logs/clover.xml"
+      - name: "Run PHPUnit with code coverage"
+        run: "ant test-with-code-coverage"
 
       - name: "Send code coverage report to codecov.io"
         uses: "codecov/codecov-action@v3.1.4"

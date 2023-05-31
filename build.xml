@@ -2,7 +2,7 @@
 <project name="version" default="setup">
     <property name="phive.bin" value="phive"/>
 
-    <target name="setup" depends="clean,install-tools,generate-autoloader"/>
+    <target name="setup" depends="clean,install-tools,install-dependencies"/>
 
     <target name="clean" unless="clean.done" description="Cleanup build artifacts">
         <delete dir="${basedir}/tools"/>
@@ -16,47 +16,72 @@
         <property name="prepare.done" value="true"/>
     </target>
 
-    <target name="-tools-installed">
-        <available file="${basedir}/tools" property="tools-installed" type="dir"/>
-    </target>
-
-    <target name="getphive" description="Get phive on travis-ci">
-        <exec executable="wget" taskname="wget">
-            <arg value="https://phar.io/releases/phive.phar"/>
-        </exec>
-        <exec executable="wget" taskname="wget">
-            <arg value="https://phar.io/releases/phive.phar.asc"/>
-        </exec>
-        <exec executable="gpg" taskname="gpg-get-key">
-            <arg line="--keyserver hkps.pool.sks-keyservers.net --recv-keys 0x9D8A98B29B2D5D79" />
-        </exec>
-        <exec executable="gpg" taskname="gpg-verify">
-            <arg line="--verify phive.phar.asc phive.phar" />
-        </exec>
-        <chmod file="phive.phar" perm="+x" />
-        <delete file="phive.phar.asc" />
-    </target>
-
     <target name="install-tools" unless="tools-installed" depends="-tools-installed" description="Install tools with Phive">
-        <exec executable="${phive.bin}" taskname="phive">
+        <exec executable="${phive.bin}" taskname="phive" failonerror="true">
             <arg value="install"/>
             <arg value="--copy" />
             <arg value="--trust-gpg-keys" />
-            <!--        phpab,           phpunit,         phpstan,         psaml,           php-cs-fixer     -->
-            <arg value="4AA394086372C20A,2A8299CE842DD38C,CF1A108D0E7AE720,8A03EA3B385DBAA1,E82B2FB314E9906E" />
+            <!--        php-cs-fixer      ,psalm             ,phpunit           -->
+            <arg value="0xE82B2FB314E9906E,0x12CE0F1D262429A5,0x4AA394086372C20A" />
         </exec>
     </target>
 
-    <target name="generate-autoloader" depends="install-tools" description="Generate autoloader using PHPAB">
-        <exec executable="${basedir}/tools/phpab" taskname="phpab">
-            <arg value="--output"/>
-            <arg path="${basedir}/src/autoload.php"/>
-            <arg path="${basedir}/src"/>
+    <target name="install-dependencies" description="Install dependencies with Composer">
+        <exec executable="composer" taskname="composer">
+            <env key="COMPOSER_DISABLE_XDEBUG_WARN" value="1"/>
+            <arg value="install"/>
+            <arg value="--no-ansi"/>
+            <arg value="--no-interaction"/>
+            <arg value="--no-progress"/>
+            <arg value="--optimize-autoloader"/>
         </exec>
     </target>
 
-    <target name="test" depends="generate-autoloader" description="Run tests">
+    <target name="php-cs-fixer" depends="install-tools" description="Dry run php-cs-fixer">
+        <exec executable="${basedir}/tools/php-cs-fixer" failonerror="true">
+            <arg value="fix" />
+            <arg value="--dry-run" />
+        </exec>
+    </target>
+
+    <target name="psalm" depends="install-tools,install-dependencies" description="Run psalm">
+        <exec executable="${basedir}/tools/psalm" taskname="psalm-cache-clear">
+            <arg value="--config=psalm.xml" />
+            <arg value="--clear-cache" />
+        </exec>
+
+        <exec executable="${basedir}/tools/psalm" taskname="psalm" failonerror="true">
+            <arg value="--config=psalm.xml" />
+            <arg value="--show-info=true" />
+            <arg value="--stats" />
+        </exec>
+    </target>
+
+    <target name="psalm-baseline" depends="install-tools,install-dependencies" description="Run psalm">
+        <exec executable="${basedir}/tools/psalm" taskname="psalm-cache-clear">
+            <arg value="--config=psalm.xml" />
+            <arg value="--clear-cache" />
+        </exec>
+
+        <exec executable="${basedir}/tools/psalm" taskname="psalm-baseline">
+            <arg value="--config=psalm.xml" />
+            <arg value="--set-baseline=build/psalm-baseline.xml" />
+            <arg value="--show-info=false" />
+        </exec>
+    </target>
+
+    <target name="test" depends="install-tools,install-dependencies" description="Run tests">
         <exec executable="${basedir}/tools/phpunit" taskname="phpunit"/>
+    </target>
+
+    <target name="test-with-code-coverage" depends="install-tools,install-dependencies" description="Run tests with code coverage">
+        <exec executable="${basedir}/tools/phpunit" taskname="phpunit">
+            <arg value="--coverage-clover build/logs/clover.xml" />
+        </exec>
+    </target>
+
+    <target name="-tools-installed">
+        <available file="${basedir}/tools/phpunit" property="tools-installed" type="file"/>
     </target>
 </project>
 

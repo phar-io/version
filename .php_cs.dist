@@ -1,16 +1,9 @@
 <?php
 
-require __DIR__ . '/tools/php-cs-fixer.d/PhpdocSingleLineVarFixer.php';
-
 return PhpCsFixer\Config::create()
-    ->registerCustomFixers([
-        new \PharIo\CSFixer\PhpdocSingleLineVarFixer()
-    ])
     ->setRiskyAllowed(true)
     ->setRules(
         [
-            'PharIo/phpdoc_single_line_var_fixer'           => true,
-
             'align_multiline_comment'                       => true,
             'array_indentation'                             => true,
             'array_syntax'                                  => ['syntax' => 'short'],
@@ -206,9 +199,7 @@ return PhpCsFixer\Config::create()
     ->setFinder(
         PhpCsFixer\Finder::create()
             ->files()
-            ->in(__DIR__ . '/build')
             ->in(__DIR__ . '/src')
             ->in(__DIR__ . '/tests')
             ->notName('*.phpt')
-            ->notName('autoload.php')
     );
