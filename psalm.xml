@@ -1,13 +1,12 @@
 <?xml version="1.0"?>
 <psalm xmlns="https://getpsalm.org/schema/config"
-       autoloader="src/autoload.php"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd">
 
     <projectFiles>
         <directory name="src" />
         <ignoreFiles>
-            <file name="src/autoload.php" />
+            <directory name="vendor/" />
         </ignoreFiles>
     </projectFiles>
 
