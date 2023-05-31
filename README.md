@@ -2,7 +2,7 @@
 
 Library for handling version information and constraints
 
-[![Build Status](https://travis-ci.org/phar-io/version.svg?branch=master)](https://travis-ci.org/phar-io/version)
+[![CI](https://github.com/phar-io/version/actions/workflows/ci.yml/badge.svg)](https://github.com/phar-io/version/actions/workflows/ci.yml)
 
 ## Installation
 
