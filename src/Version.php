@@ -162,7 +162,7 @@ class Version {
      */
     private function parseVersion(array $matches): void {
         $this->major = new VersionNumber((int)$matches['Major']);
-        $this->minor = new VersionNumber((int)$matches['Minor']);
+        $this->minor = isset($matches['Minor']) ? new VersionNumber((int)$matches['Minor']) : new VersionNumber(0);
         $this->patch = isset($matches['Patch']) ? new VersionNumber((int)$matches['Patch']) : new VersionNumber(0);
 
         if (isset($matches['PreReleaseSuffix']) && $matches['PreReleaseSuffix'] !== '') {
@@ -182,8 +182,9 @@ class Version {
     private function ensureVersionStringIsValid($version): void {
         $regex = '/^v?
             (?P<Major>0|[1-9]\d*)
-            \\.
+            (\\.
             (?P<Minor>0|[1-9]\d*)
+            )?
             (\\.
                 (?P<Patch>0|[1-9]\d*)
             )?

@@ -156,6 +156,26 @@ class VersionConstraintParserTest extends TestCase {
                         new SpecificMajorVersionConstraint('^3.0.0-alpha.1', 3)
                     ]
                 )
+            ],
+            [
+                '^1.0',
+                new AndVersionConstraintGroup(
+                    '^1.0',
+                    [
+                        new GreaterThanOrEqualToVersionConstraint('^1.0', new Version('1.0')),
+                        new SpecificMajorVersionConstraint('^1.0', 1)
+                    ]
+                )
+            ],
+            [
+                '^1',
+                new AndVersionConstraintGroup(
+                    '^1',
+                    [
+                        new GreaterThanOrEqualToVersionConstraint('^1', new Version('1')),
+                        new SpecificMajorVersionConstraint('^1', 1)
+                    ]
+                )
             ]
         ];
     }
