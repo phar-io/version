@@ -2,6 +2,13 @@
 
 All notable changes to phar-io/version are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [3.3.0] - 2024-??-??
+
+### Fixed
+
+- [#35](https://github.com/phar-io/version/issues/35): major version only not supported, e.g. ^6
+
+
 ## [3.2.1] - 2022-02-21
 
 ### Fixed
@@ -132,6 +139,10 @@ Changes to public API:
 a numeric suffix as seen in Debian packages are now supported.  
 
 
+[3.3.0]: https://github.com/phar-io/version/compare/3.2.1...3.3.0
+[3.2.1]: https://github.com/phar-io/version/compare/3.2.1...3.2.1
+[3.2.0]: https://github.com/phar-io/version/compare/3.1.1...3.2.0
+[3.1.1]: https://github.com/phar-io/version/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/phar-io/version/compare/3.0.4...3.1.0
 [3.0.4]: https://github.com/phar-io/version/compare/3.0.3...3.0.4
 [3.0.3]: https://github.com/phar-io/version/compare/3.0.2...3.0.3
